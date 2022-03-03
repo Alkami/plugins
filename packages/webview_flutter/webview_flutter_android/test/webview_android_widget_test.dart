@@ -294,6 +294,22 @@ void main() {
 
           verify(mockWebSettings.setSupportZoom(false));
         });
+
+//TODO Mica 
+        // testWidgets('geolocationEnabled', (WidgetTester tester) async {
+        //   await buildWidget(
+        //     tester,
+        //     creationParams: CreationParams(
+        //       webSettings: WebSettings(
+        //         userAgent: const WebSetting<String?>.absent(),
+        //         geolocationEnabled: false,
+        //         hasNavigationDelegate: false,
+        //       ),
+        //     ),
+        //   );
+
+        //   verify(mockWebSettings.setGeolocationEnabled(false));
+        // });
       });
     });
 
