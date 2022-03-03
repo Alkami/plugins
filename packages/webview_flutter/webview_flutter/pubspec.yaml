@@ -19,9 +19,25 @@ flutter:
 dependencies:
   flutter:
     sdk: flutter
-  webview_flutter_android: ^2.8.0
-  webview_flutter_platform_interface: ^1.8.0
-  webview_flutter_wkwebview: ^2.7.0
+  # FOR TESTING ONLY. DO NOT MERGE.
+  webview_flutter_android:
+    # path: ../webview_flutter_android
+    git:
+      url: https://github.com/Alkami/plugins.git
+      path: packages/webview_flutter/webview_flutter_android
+      ref: feat/micaiah/DEV-132054-add-geolocation
+  webview_flutter_platform_interface: 
+    # path: ../webview_flutter_platform_interface
+    git:
+      url: https://github.com/Alkami/plugins.git
+      path: packages/webview_flutter/webview_flutter_platform_interface
+      ref: feat/micaiah/DEV-132054-add-geolocation
+  webview_flutter_wkwebview:
+    # path: ../webview_flutter_wkwebview
+    git:
+      url: https://github.com/Alkami/plugins.git
+      path: packages/webview_flutter/webview_flutter_wkwebview
+      ref: feat/micaiah/DEV-132054-add-geolocation
 
 dev_dependencies:
   build_runner: ^2.1.5

@@ -12,6 +12,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_driver/driver_extension.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:webview_flutter_android/webview_surface_android.dart';
 import 'package:webview_flutter_platform_interface/webview_flutter_platform_interface.dart';
 
@@ -24,10 +25,15 @@ void appMain() {
   main();
 }
 
-void main() {
+Future<void> main() async {
   // Configure the [WebView] to use the [SurfaceAndroidWebView]
   // implementation instead of the default [AndroidWebView].
   WebView.platform = SurfaceAndroidWebView();
+
+  WidgetsFlutterBinding.ensureInitialized();
+  // Location permission request is required to enable geolocation
+  // see [Webview.geolocationEnabled]
+  await Permission.location.request();
 
   runApp(const MaterialApp(home: _WebViewExample()));
 }
@@ -114,7 +120,9 @@ class _WebViewExampleState extends State<_WebViewExample> {
       // to allow calling Scaffold.of(context) so we can show a snackbar.
       body: Builder(builder: (BuildContext context) {
         return WebView(
-          initialUrl: 'https://flutter.dev',
+          initialUrl:
+              'https://iccu-neo.qa.alkamitech.com/Mobile/Locations/LocationSearch',
+          geolocationEnabled: true,
           onWebViewCreated: (WebViewController controller) {
             _controller.complete(controller);
           },
@@ -139,6 +147,7 @@ class _WebViewExampleState extends State<_WebViewExample> {
           javascriptMode: JavascriptMode.unrestricted,
           userAgent: 'Custom_User_Agent',
           backgroundColor: const Color(0x80000000),
+          zoomEnabled: true,
         );
       }),
       floatingActionButton: favoriteButton(),

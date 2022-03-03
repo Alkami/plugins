@@ -11,9 +11,19 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-void main() => runApp(MaterialApp(home: WebViewExample()));
+Future<void> main() async {
+  if (Platform.isAndroid) {
+    WidgetsFlutterBinding.ensureInitialized();
+    // Location permission request is required to enable geolocation
+    // see [Webview.geolocationEnabled]
+    await Permission.location.request();
+  }
+
+  runApp(MaterialApp(home: WebViewExample()));
+}
 
 const String kNavigationExamplePage = '''
 <!DOCTYPE html><html>
@@ -103,8 +113,10 @@ class _WebViewExampleState extends State<WebViewExample> {
       // to allow calling Scaffold.of(context) so we can show a snackbar.
       body: Builder(builder: (BuildContext context) {
         return WebView(
-          initialUrl: 'https://flutter.dev',
+          initialUrl:
+              'https://iccu-neo.qa.alkamitech.com/Mobile/Locations/LocationSearch',
           javascriptMode: JavascriptMode.unrestricted,
+          geolocationEnabled: true,
           onWebViewCreated: (WebViewController webViewController) {
             _controller.complete(webViewController);
           },
