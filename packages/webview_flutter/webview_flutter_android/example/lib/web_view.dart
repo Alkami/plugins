@@ -76,6 +76,7 @@ class WebView extends StatefulWidget {
     this.gestureNavigationEnabled = false,
     this.userAgent,
     this.zoomEnabled = true,
+    this.geolocationEnabled = false,
     this.initialMediaPlaybackPolicy =
         AutoMediaPlaybackPolicy.require_user_action_for_all_media_types,
     this.allowsInlineMediaPlayback = false,
@@ -220,6 +221,15 @@ class WebView extends StatefulWidget {
   ///
   /// By default 'zoomEnabled' is true
   final bool zoomEnabled;
+
+  /// A Boolean value indicating whether the Webview should support device geolocation
+  /// 
+  /// This only works on Android. 
+  /// 
+  /// iOS and Web will prompt the user to enable location before granting access
+  /// 
+  /// By default 'geolocationEnabled' is false
+  final bool? geolocationEnabled;
 
   /// The value used for the HTTP User-Agent: request header.
   ///
@@ -679,6 +689,7 @@ WebSettings _webSettingsFromWidget(WebView widget) {
     allowsInlineMediaPlayback: widget.allowsInlineMediaPlayback,
     userAgent: WebSetting<String?>.of(widget.userAgent),
     zoomEnabled: widget.zoomEnabled,
+    geolocationEnabled: widget.geolocationEnabled,
   );
 }
 

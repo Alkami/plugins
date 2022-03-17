@@ -268,7 +268,10 @@ class WebViewAndroidPlatformController extends WebViewPlatformController {
         _setJavaScriptMode(setting.javascriptMode!),
       if (setting.debuggingEnabled != null)
         _setDebuggingEnabled(setting.debuggingEnabled!),
-      if (setting.zoomEnabled != null) _setZoomEnabled(setting.zoomEnabled!),
+      if (setting.zoomEnabled != null) 
+        _setZoomEnabled(setting.zoomEnabled!),
+      if (setting.geolocationEnabled != null) 
+        _setGeolocationEnabled(setting.geolocationEnabled!),
     ]);
   }
 
@@ -429,6 +432,10 @@ class WebViewAndroidPlatformController extends WebViewPlatformController {
 
   Future<void> _setZoomEnabled(bool zoomEnabled) {
     return webView.settings.setSupportZoom(zoomEnabled);
+  }
+
+  Future<void> _setGeolocationEnabled(bool enabled) {
+    return webView.settings.setGeolocationEnabled(enabled);
   }
 }
 

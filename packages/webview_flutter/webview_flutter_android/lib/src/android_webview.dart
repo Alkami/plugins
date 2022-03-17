@@ -499,6 +499,13 @@ class WebSettings {
     return api.setSupportZoomFromInstance(this, support);
   }
 
+  /// Sets whether the WebView should support geolocation.
+  ///
+  /// The default is false.
+  Future<void> setGeolocationEnabled(bool enabled) {
+    return api.setGeolocationEnabledFromInstance(this, enabled);
+  }
+
   /// Sets whether the WebView loads pages in overview mode, that is, zooms out the content to fit on screen by width.
   ///
   /// This setting is taken into account when the content width is greater than

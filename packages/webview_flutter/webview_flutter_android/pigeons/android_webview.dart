@@ -125,6 +125,8 @@ abstract class WebSettingsHostApi {
 
   void setSupportZoom(int instanceId, bool support);
 
+  void setGeolocationEnabled(int instanceId, bool enabled);
+
   void setLoadWithOverviewMode(int instanceId, bool overview);
 
   void setUseWideViewPort(int instanceId, bool use);
