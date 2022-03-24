@@ -27,6 +27,12 @@ dependencies:
       path: packages/webview_flutter/webview_flutter_platform_interface
       ref: feat/micaiah/DEV-132054-add-geolocation
 
+  webview_flutter_android:
+    git:
+      url: https://github.com/Alkami/plugins.git
+      path: packages/webview_flutter/webview_flutter_android
+      ref: feat-android-file-upload
+
 dev_dependencies:
   build_runner: ^2.1.4
   flutter_driver:

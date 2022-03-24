@@ -4,13 +4,13 @@
 
 package io.flutter.plugins.webviewflutter;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Message;
-import android.webkit.GeolocationPermissions;
-import android.webkit.WebChromeClient;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
+import android.webkit.*;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -33,6 +33,8 @@ public class WebChromeClientHostApiImpl implements WebChromeClientHostApi {
   public static class WebChromeClientImpl extends WebChromeClient implements Releasable {
     @Nullable private WebChromeClientFlutterApiImpl flutterApi;
     private WebViewClient webViewClient;
+    private ValueCallback<Uri[]> mFilePathCallback;
+    private final static int FILECHOOSER_RESULTCODE=1;
 
     /**
      * Creates a {@link WebChromeClient} that passes arguments of callbacks methods to Dart.
@@ -112,6 +114,23 @@ public class WebChromeClientHostApiImpl implements WebChromeClientHostApi {
     public void onGeolocationPermissionsShowPrompt(final String origin, final GeolocationPermissions.Callback callback) {
       callback.invoke(origin, true, false);
       super.onGeolocationPermissionsShowPrompt(origin, callback);
+    }
+
+    @Override
+    public boolean onShowFileChooser(
+            WebView webView,
+            ValueCallback<Uri[]> filePathCallback,
+            FileChooserParams fileChooserParams) {
+      final Context context = webView.getContext();
+      final boolean allowMultipleFiles =
+              Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
+                      && fileChooserParams.getMode() == FileChooserParams.MODE_OPEN_MULTIPLE;
+      final String[] acceptTypes =
+              Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
+                      ? fileChooserParams.getAcceptTypes()
+                      : new String[0];
+      new FileChooserLauncher(context, allowMultipleFiles, filePathCallback, acceptTypes).start();
+      return true;
     }
 
     /**
