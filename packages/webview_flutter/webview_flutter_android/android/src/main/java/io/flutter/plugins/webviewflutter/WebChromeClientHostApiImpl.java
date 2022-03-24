@@ -4,13 +4,11 @@
 
 package io.flutter.plugins.webviewflutter;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Message;
-import android.webkit.GeolocationPermissions;
-import android.webkit.WebChromeClient;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
+import android.webkit.*;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -33,6 +31,8 @@ public class WebChromeClientHostApiImpl implements WebChromeClientHostApi {
   public static class WebChromeClientImpl extends WebChromeClient implements Releasable {
     @Nullable private WebChromeClientFlutterApiImpl flutterApi;
     private WebViewClient webViewClient;
+    private Object fileChooserMethodChannelCallback;
+    private final static int FILECHOOSER_RESULTCODE=1;
 
     /**
      * Creates a {@link WebChromeClient} that passes arguments of callbacks methods to Dart.
@@ -112,6 +112,24 @@ public class WebChromeClientHostApiImpl implements WebChromeClientHostApi {
     public void onGeolocationPermissionsShowPrompt(final String origin, final GeolocationPermissions.Callback callback) {
       callback.invoke(origin, true, false);
       super.onGeolocationPermissionsShowPrompt(origin, callback);
+    }
+
+    @Override
+    public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback, WebChromeClient.FileChooserParams fileChooserParams) {
+      //mUploadMessageArray = filePathCallback;
+
+      Intent contentSelectionIntent = new Intent(Intent.ACTION_GET_CONTENT);
+      contentSelectionIntent.addCategory(Intent.CATEGORY_OPENABLE);
+      contentSelectionIntent.setType("*/*");
+      Intent[] intentArray;
+      intentArray = new Intent[0];
+
+      Intent chooserIntent = new Intent(Intent.ACTION_CHOOSER);
+      chooserIntent.putExtra(Intent.EXTRA_INTENT, contentSelectionIntent);
+      chooserIntent.putExtra(Intent.EXTRA_TITLE, "Image Chooser");
+      chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, intentArray);
+      webView.getContext().startActivity(chooserIntent);
+      return true;
     }
 
     /**
