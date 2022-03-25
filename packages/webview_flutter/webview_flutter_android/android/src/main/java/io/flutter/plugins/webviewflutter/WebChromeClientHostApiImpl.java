@@ -4,6 +4,8 @@
 
 package io.flutter.plugins.webviewflutter;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -31,7 +33,7 @@ public class WebChromeClientHostApiImpl implements WebChromeClientHostApi {
   public static class WebChromeClientImpl extends WebChromeClient implements Releasable {
     @Nullable private WebChromeClientFlutterApiImpl flutterApi;
     private WebViewClient webViewClient;
-    private Object fileChooserMethodChannelCallback;
+    private ValueCallback<Uri[]> mFilePathCallback;
     private final static int FILECHOOSER_RESULTCODE=1;
 
     /**
@@ -115,20 +117,22 @@ public class WebChromeClientHostApiImpl implements WebChromeClientHostApi {
     }
 
     @Override
-    public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback, WebChromeClient.FileChooserParams fileChooserParams) {
-      //mUploadMessageArray = filePathCallback;
-
-      Intent contentSelectionIntent = new Intent(Intent.ACTION_GET_CONTENT);
-      contentSelectionIntent.addCategory(Intent.CATEGORY_OPENABLE);
-      contentSelectionIntent.setType("*/*");
-      Intent[] intentArray;
-      intentArray = new Intent[0];
-
-      Intent chooserIntent = new Intent(Intent.ACTION_CHOOSER);
-      chooserIntent.putExtra(Intent.EXTRA_INTENT, contentSelectionIntent);
-      chooserIntent.putExtra(Intent.EXTRA_TITLE, "Image Chooser");
-      chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, intentArray);
-      webView.getContext().startActivity(chooserIntent);
+    public boolean onShowFileChooser(
+            WebView webView,
+            ValueCallback<Uri[]> filePathCallback,
+            FileChooserParams fileChooserParams) {
+      // info as of 2021-03-08:
+      // don't use fileChooserParams.getTitle() as it is (always? on Mi 9T Pro Android 10 at least) null
+      // don't use fileChooserParams.isCaptureEnabled() as it is (always? on Mi 9T Pro Android 10 at least) false, even when the file upload allows images or any file
+      final Context context = webView.getContext();
+      final boolean allowMultipleFiles =
+              Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
+                      && fileChooserParams.getMode() == FileChooserParams.MODE_OPEN_MULTIPLE;
+      final String[] acceptTypes =
+              Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
+                      ? fileChooserParams.getAcceptTypes()
+                      : new String[0];
+      new FileChooserLauncher(context, allowMultipleFiles, filePathCallback, acceptTypes).start();
       return true;
     }
 
