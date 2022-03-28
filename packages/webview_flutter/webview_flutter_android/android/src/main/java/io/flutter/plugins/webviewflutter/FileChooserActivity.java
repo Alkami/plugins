@@ -1,7 +1,3 @@
-// Copyright 2013 The Flutter Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
-
 package io.flutter.plugins.webviewflutter;
 
 import static io.flutter.plugins.webviewflutter.Constants.ACTION_FILE_CHOOSER_FINISHED;
@@ -196,7 +192,7 @@ public class FileChooserActivity extends Activity {
                         fileChooserFinishedIntent.putExtra(EXTRA_FILE_URIS, uriStrings);
                     }
                 } else {
-                    // image result from camera (videos from the camera are handled above, but this if-branch could handle them too if this varies from device to device)
+                    // image result from camera
                     for (Uri captureOutputUri : potentialCaptureOutputUris) {
                         try {
                             // just opening an input stream (and closing immediately) to test if the Uri points to a valid file

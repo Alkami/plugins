@@ -10,7 +10,11 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Message;
-import android.webkit.*;
+import android.webkit.GeolocationPermissions;
+import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -122,6 +126,9 @@ public class WebChromeClientHostApiImpl implements WebChromeClientHostApi {
             ValueCallback<Uri[]> filePathCallback,
             FileChooserParams fileChooserParams) {
       final Context context = webView.getContext();
+      // Alkami's minSdkVersion version is higher than LOLLIPOP so 
+      // these will alway be true, but need to have them for 
+      // compatability with the package itself.
       final boolean allowMultipleFiles =
               Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
                       && fileChooserParams.getMode() == FileChooserParams.MODE_OPEN_MULTIPLE;
