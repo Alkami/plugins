@@ -58,6 +58,13 @@ public class JavaScriptChannel implements Releasable {
     }
   }
 
+  // Adapter for Javascript code expecting "exec" method
+  @SuppressWarnings("unused")
+  @JavascriptInterface
+  public void exec(final String messageString, final String callBackID, final String secureId) {
+    postMessage(messageString);
+  }
+
   @Override
   public void release() {
     if (flutterApi != null) {
