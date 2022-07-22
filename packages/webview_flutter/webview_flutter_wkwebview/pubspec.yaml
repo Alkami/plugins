@@ -24,7 +24,7 @@ dependencies:
     git:
       url: https://github.com/Alkami/plugins.git
       path: packages/webview_flutter/webview_flutter_platform_interface
-      ref: release/4002.0.3
+      ref: testing-release-script-1
 
 dev_dependencies:
   build_runner: ^2.1.5
