@@ -1,8 +1,8 @@
 name: webview_flutter_wkwebview
 description: A Flutter plugin that provides a WebView widget based on Apple's WKWebView control.
-repository: https://github.com/flutter/plugins/tree/main/packages/webview_flutter/webview_flutter_wkwebview
-issue_tracker: https://github.com/flutter/flutter/issues?q=is%3Aissue+is%3Aopen+label%3A%22p%3A+webview%22
-version: 2.7.1
+repository: https://github.com/Alkami/plugins/tree/main/packages/webview_flutter
+publish_to: https://dart.cloudsmith.io/alkami/flutterpackages/
+version: 3.3.0 # original version was 2.7.1 when this was forked
 
 environment:
   sdk: ">=2.15.0 <3.0.0"
@@ -21,10 +21,8 @@ dependencies:
   # FOR TESTING ONLY. DO NOT MERGE.
   webview_flutter_platform_interface: 
     # path: ../webview_flutter_platform_interface
-    git:
-      url: https://github.com/Alkami/plugins.git
-      path: packages/webview_flutter/webview_flutter_platform_interface
-      ref: main
+    hosted: https://dart.cloudsmith.io/alkami/flutterpackages/
+    version: ^3.0.0
 
 dev_dependencies:
   build_runner: ^2.1.5
@@ -33,4 +31,8 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   mockito: ^5.0.16
+  mplat_pr_tools:
+    git:
+      url: https://github.com/Alkami/mplat_pull_request_tools.git
+      ref: chore/micaiah/DEV-139004-publish-webview-to-cloudsmith
   pedantic: ^1.10.0

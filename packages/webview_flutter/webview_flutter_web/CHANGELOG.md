@@ -1,3 +1,11 @@
+# 3.1.0
+
+- chore:DEV-139004 publish to cloudsmith
+
+# 3.0.0
+
+- chore:DEV-139004 publish to cloudsmith
+
 ## NEXT
 
 * Fixes unit tests to run on latest `master` version of Flutter.

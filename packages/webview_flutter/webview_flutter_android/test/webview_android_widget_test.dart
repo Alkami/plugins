@@ -9,8 +9,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:webview_flutter_android/src/android_webview.dart'
-    as android_webview;
+import 'package:webview_flutter_android/src/android_webview.dart' as android_webview;
 import 'package:webview_flutter_android/src/android_webview_api_impls.dart';
 import 'package:webview_flutter_android/src/instance_manager.dart';
 import 'package:webview_flutter_android/webview_android_widget.dart';
@@ -160,8 +159,7 @@ void main() {
         await buildWidget(
           tester,
           creationParams: CreationParams(
-            autoMediaPlaybackPolicy:
-                AutoMediaPlaybackPolicy.require_user_action_for_all_media_types,
+            autoMediaPlaybackPolicy: AutoMediaPlaybackPolicy.require_user_action_for_all_media_types,
             webSettings: WebSettings(
               userAgent: const WebSetting<String?>.absent(),
               hasNavigationDelegate: false,
@@ -199,8 +197,7 @@ void main() {
           ),
         );
 
-        final List<dynamic> javaScriptChannels =
-            verify(mockWebView.addJavaScriptChannel(captureAny)).captured;
+        final List<dynamic> javaScriptChannels = verify(mockWebView.addJavaScriptChannel(captureAny)).captured;
         expect(javaScriptChannels[0].channelName, 'a');
         expect(javaScriptChannels[1].channelName, 'b');
       });
@@ -295,7 +292,7 @@ void main() {
           verify(mockWebSettings.setSupportZoom(false));
         });
 
-//TODO Mica 
+// TODO(mskolnick): enable tests, https://jira.alkami.com/browse/DEV-132997
         // testWidgets('geolocationEnabled', (WidgetTester tester) async {
         //   await buildWidget(
         //     tester,
@@ -314,8 +311,7 @@ void main() {
     });
 
     group('WebViewPlatformController', () {
-      testWidgets('loadFile without "file://" prefix',
-          (WidgetTester tester) async {
+      testWidgets('loadFile without "file://" prefix', (WidgetTester tester) async {
         await buildWidget(tester);
 
         const String filePath = '/path/to/file.html';
@@ -327,8 +323,7 @@ void main() {
         ));
       });
 
-      testWidgets('loadFile with "file://" prefix',
-          (WidgetTester tester) async {
+      testWidgets('loadFile with "file://" prefix', (WidgetTester tester) async {
         await buildWidget(tester);
 
         await testController.loadFile('file:///path/to/file.html');
@@ -339,8 +334,7 @@ void main() {
         ));
       });
 
-      testWidgets('loadFile should setAllowFileAccess to true',
-          (WidgetTester tester) async {
+      testWidgets('loadFile should setAllowFileAccess to true', (WidgetTester tester) async {
         await buildWidget(tester);
 
         await testController.loadFile('file:///path/to/file.html');
@@ -353,11 +347,9 @@ void main() {
         const String assetKey = 'test_assets/index.html';
 
         when(mockFlutterAssetManager.getAssetFilePathByName(assetKey))
-            .thenAnswer(
-                (_) => Future<String>.value('flutter_assets/$assetKey'));
+            .thenAnswer((_) => Future<String>.value('flutter_assets/$assetKey'));
         when(mockFlutterAssetManager.list('flutter_assets/test_assets'))
-            .thenAnswer(
-                (_) => Future<List<String>>.value(<String>['index.html']));
+            .thenAnswer((_) => Future<List<String>>.value(<String>['index.html']));
 
         await testController.loadFlutterAsset(assetKey);
 
@@ -367,16 +359,14 @@ void main() {
         ));
       });
 
-      testWidgets('loadFlutterAsset with file in root',
-          (WidgetTester tester) async {
+      testWidgets('loadFlutterAsset with file in root', (WidgetTester tester) async {
         await buildWidget(tester);
         const String assetKey = 'index.html';
 
         when(mockFlutterAssetManager.getAssetFilePathByName(assetKey))
-            .thenAnswer(
-                (_) => Future<String>.value('flutter_assets/$assetKey'));
-        when(mockFlutterAssetManager.list('flutter_assets')).thenAnswer(
-            (_) => Future<List<String>>.value(<String>['index.html']));
+            .thenAnswer((_) => Future<String>.value('flutter_assets/$assetKey'));
+        when(mockFlutterAssetManager.list('flutter_assets'))
+            .thenAnswer((_) => Future<List<String>>.value(<String>['index.html']));
 
         await testController.loadFlutterAsset(assetKey);
 
@@ -386,15 +376,12 @@ void main() {
         ));
       });
 
-      testWidgets(
-          'loadFlutterAsset throws ArgumentError when asset does not exists',
-          (WidgetTester tester) async {
+      testWidgets('loadFlutterAsset throws ArgumentError when asset does not exists', (WidgetTester tester) async {
         await buildWidget(tester);
         const String assetKey = 'test_assets/index.html';
 
         when(mockFlutterAssetManager.getAssetFilePathByName(assetKey))
-            .thenAnswer(
-                (_) => Future<String>.value('flutter_assets/$assetKey'));
+            .thenAnswer((_) => Future<String>.value('flutter_assets/$assetKey'));
         when(mockFlutterAssetManager.list('flutter_assets/test_assets'))
             .thenAnswer((_) => Future<List<String>>.value(<String>['']));
 
@@ -403,14 +390,12 @@ void main() {
           throwsA(
             isA<ArgumentError>()
                 .having((ArgumentError error) => error.name, 'name', 'key')
-                .having((ArgumentError error) => error.message, 'message',
-                    'Asset for key "$assetKey" not found.'),
+                .having((ArgumentError error) => error.message, 'message', 'Asset for key "$assetKey" not found.'),
           ),
         );
       });
 
-      testWidgets('loadHtmlString without base URL',
-          (WidgetTester tester) async {
+      testWidgets('loadHtmlString without base URL', (WidgetTester tester) async {
         await buildWidget(tester);
 
         const String htmlString = '<html><body>Test data.</body></html>';
@@ -453,8 +438,7 @@ void main() {
       });
 
       group('loadRequest', () {
-        testWidgets('Throws ArgumentError for empty scheme',
-            (WidgetTester tester) async {
+        testWidgets('Throws ArgumentError for empty scheme', (WidgetTester tester) async {
           await buildWidget(tester);
 
           expect(
@@ -515,10 +499,8 @@ void main() {
 
           final Uint8List body = Uint8List.fromList('Test Body'.codeUnits);
 
-          await testController.loadRequest(WebViewRequest(
-              uri: Uri.parse('https://www.google.com'),
-              method: WebViewRequestMethod.post,
-              body: body));
+          await testController.loadRequest(
+              WebViewRequest(uri: Uri.parse('https://www.google.com'), method: WebViewRequestMethod.post, body: body));
 
           verify(mockWebView.postUrl(
             'https://www.google.com',
@@ -527,8 +509,7 @@ void main() {
         });
       });
 
-      testWidgets('no update to userAgentString when there is no change',
-          (WidgetTester tester) async {
+      testWidgets('no update to userAgentString when there is no change', (WidgetTester tester) async {
         await buildWidget(tester);
 
         reset(mockWebSettings);
@@ -540,8 +521,7 @@ void main() {
         verifyNever(mockWebSettings.setUserAgentString(any));
       });
 
-      testWidgets('update null userAgentString with empty string',
-          (WidgetTester tester) async {
+      testWidgets('update null userAgentString with empty string', (WidgetTester tester) async {
         await buildWidget(tester);
 
         reset(mockWebSettings);
@@ -556,10 +536,8 @@ void main() {
       testWidgets('currentUrl', (WidgetTester tester) async {
         await buildWidget(tester);
 
-        when(mockWebView.getUrl())
-            .thenAnswer((_) => Future<String>.value('https://www.google.com'));
-        expect(
-            testController.currentUrl(), completion('https://www.google.com'));
+        when(mockWebView.getUrl()).thenAnswer((_) => Future<String>.value('https://www.google.com'));
+        expect(testController.currentUrl(), completion('https://www.google.com'));
       });
 
       testWidgets('canGoBack', (WidgetTester tester) async {
@@ -648,8 +626,7 @@ void main() {
         await buildWidget(tester);
 
         await testController.addJavascriptChannels(<String>{'c', 'd'});
-        final List<dynamic> javaScriptChannels =
-            verify(mockWebView.addJavaScriptChannel(captureAny)).captured;
+        final List<dynamic> javaScriptChannels = verify(mockWebView.addJavaScriptChannel(captureAny)).captured;
         expect(javaScriptChannels[0].channelName, 'c');
         expect(javaScriptChannels[1].channelName, 'd');
       });
@@ -659,8 +636,7 @@ void main() {
 
         await testController.addJavascriptChannels(<String>{'c', 'd'});
         await testController.removeJavascriptChannels(<String>{'c', 'd'});
-        final List<dynamic> javaScriptChannels =
-            verify(mockWebView.removeJavaScriptChannel(captureAny)).captured;
+        final List<dynamic> javaScriptChannels = verify(mockWebView.removeJavaScriptChannel(captureAny)).captured;
         expect(javaScriptChannels[0].channelName, 'c');
         expect(javaScriptChannels[1].channelName, 'd');
       });
@@ -668,8 +644,7 @@ void main() {
       testWidgets('getTitle', (WidgetTester tester) async {
         await buildWidget(tester);
 
-        when(mockWebView.getTitle())
-            .thenAnswer((_) => Future<String>.value('Web Title'));
+        when(mockWebView.getTitle()).thenAnswer((_) => Future<String>.value('Web Title'));
         expect(testController.getTitle(), completion('Web Title'));
       });
 
@@ -715,8 +690,7 @@ void main() {
         verify(mockCallbacksHandler.onPageFinished('https://google.com'));
       });
 
-      testWidgets('onWebResourceError from onReceivedError',
-          (WidgetTester tester) async {
+      testWidgets('onWebResourceError from onReceivedError', (WidgetTester tester) async {
         await buildWidget(tester);
         webViewClient.onReceivedError(
           mockWebView,
@@ -726,9 +700,7 @@ void main() {
         );
 
         final WebResourceError error =
-            verify(mockCallbacksHandler.onWebResourceError(captureAny))
-                .captured
-                .single as WebResourceError;
+            verify(mockCallbacksHandler.onWebResourceError(captureAny)).captured.single as WebResourceError;
         expect(error.description, 'description');
         expect(error.errorCode, -4);
         expect(error.failingUrl, 'https://google.com');
@@ -736,8 +708,7 @@ void main() {
         expect(error.errorType, WebResourceErrorType.authentication);
       });
 
-      testWidgets('onWebResourceError from onReceivedRequestError',
-          (WidgetTester tester) async {
+      testWidgets('onWebResourceError from onReceivedRequestError', (WidgetTester tester) async {
         await buildWidget(tester);
         webViewClient.onReceivedRequestError(
           mockWebView,
@@ -756,9 +727,7 @@ void main() {
         );
 
         final WebResourceError error =
-            verify(mockCallbacksHandler.onWebResourceError(captureAny))
-                .captured
-                .single as WebResourceError;
+            verify(mockCallbacksHandler.onWebResourceError(captureAny)).captured.single as WebResourceError;
         expect(error.description, 'description');
         expect(error.errorCode, -16);
         expect(error.failingUrl, 'https://google.com');
@@ -766,8 +735,7 @@ void main() {
         expect(error.errorType, WebResourceErrorType.unsafeResource);
       });
 
-      testWidgets('onNavigationRequest from urlLoading',
-          (WidgetTester tester) async {
+      testWidgets('onNavigationRequest from urlLoading', (WidgetTester tester) async {
         await buildWidget(tester, hasNavigationDelegate: true);
         when(mockCallbacksHandler.onNavigationRequest(
           isForMainFrame: argThat(isTrue, named: 'isForMainFrame'),
@@ -782,8 +750,7 @@ void main() {
         verify(mockWebView.loadUrl('https://google.com', <String, String>{}));
       });
 
-      testWidgets('onNavigationRequest from requestLoading',
-          (WidgetTester tester) async {
+      testWidgets('onNavigationRequest from requestLoading', (WidgetTester tester) async {
         await buildWidget(tester, hasNavigationDelegate: true);
         when(mockCallbacksHandler.onNavigationRequest(
           isForMainFrame: argThat(isTrue, named: 'isForMainFrame'),
@@ -815,9 +782,7 @@ void main() {
           await testController.addJavascriptChannels(<String>{'hello'});
 
           final WebViewAndroidJavaScriptChannel javaScriptChannel =
-              verify(mockWebView.addJavaScriptChannel(captureAny))
-                  .captured
-                  .single as WebViewAndroidJavaScriptChannel;
+              verify(mockWebView.addJavaScriptChannel(captureAny)).captured.single as WebViewAndroidJavaScriptChannel;
           javaScriptChannel.postMessage('goodbye');
           verify(mockJavascriptChannelRegistry.onJavascriptChannelMessage(
             'hello',
@@ -839,8 +804,7 @@ void main() {
       mockPlatformHostApi = MockTestWebViewHostApi();
       TestWebViewHostApi.setup(mockPlatformHostApi);
       instanceManager = InstanceManager();
-      android_webview.WebView.api =
-          WebViewHostApiImpl(instanceManager: instanceManager);
+      android_webview.WebView.api = WebViewHostApiImpl(instanceManager: instanceManager);
     });
 
     test('setWebContentsDebuggingEnabled true', () {
