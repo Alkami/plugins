@@ -4,10 +4,7 @@
 
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
+import 'package:alkami_core_dependencies/alkami_core_dependencies.dart' hide CreationParams;
 import 'package:webview_flutter_platform_interface/webview_flutter_platform_interface.dart';
 
 import 'src/android_webview.dart';
@@ -53,10 +50,8 @@ class AndroidWebView implements WebViewPlatform {
               }
             },
             gestureRecognizers: gestureRecognizers,
-            layoutDirection:
-                Directionality.maybeOf(context) ?? TextDirection.rtl,
-            creationParams:
-                InstanceManager.instance.getInstanceId(controller.webView),
+            layoutDirection: Directionality.maybeOf(context) ?? TextDirection.rtl,
+            creationParams: InstanceManager.instance.getInstanceId(controller.webView),
             creationParamsCodec: const StandardMessageCodec(),
           ),
         );

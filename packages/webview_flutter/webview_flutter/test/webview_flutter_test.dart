@@ -4,12 +4,10 @@
 
 import 'dart:typed_data';
 
+import 'package:alkami_core_dependencies/alkami_core_dependencies.dart' hide CreationParams;
+import 'package:alkami_core_dev_dependencies/alkami_core_dev_dependencies.dart';
 import 'package:flutter/src/foundation/basic_types.dart';
 import 'package:flutter/src/gestures/recognizer.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_platform_interface/webview_flutter_platform_interface.dart';
 
@@ -32,15 +30,13 @@ void main() {
     when(mockWebViewPlatform.build(
       context: anyNamed('context'),
       creationParams: anyNamed('creationParams'),
-      webViewPlatformCallbacksHandler:
-          anyNamed('webViewPlatformCallbacksHandler'),
+      webViewPlatformCallbacksHandler: anyNamed('webViewPlatformCallbacksHandler'),
       javascriptChannelRegistry: anyNamed('javascriptChannelRegistry'),
       onWebViewPlatformCreated: anyNamed('onWebViewPlatformCreated'),
       gestureRecognizers: anyNamed('gestureRecognizers'),
     )).thenAnswer((Invocation invocation) {
       final WebViewPlatformCreatedCallback onWebViewPlatformCreated =
-          invocation.namedArguments[const Symbol('onWebViewPlatformCreated')]
-              as WebViewPlatformCreatedCallback;
+          invocation.namedArguments[const Symbol('onWebViewPlatformCreated')] as WebViewPlatformCreatedCallback;
       return TestPlatformWebView(
         mockWebViewPlatformController: mockWebViewPlatformController,
         onWebViewPlatformCreated: onWebViewPlatformCreated,
@@ -207,8 +203,7 @@ void main() {
     ));
   });
 
-  testWidgets('Load HTML string with empty string',
-      (WidgetTester tester) async {
+  testWidgets('Load HTML string with empty string', (WidgetTester tester) async {
     WebViewController? controller;
     await tester.pumpWidget(
       WebView(
@@ -278,9 +273,7 @@ void main() {
 
     expect(controller, isNotNull);
 
-    final Map<String, String> headers = <String, String>{
-      'CACHE-CONTROL': 'ABC'
-    };
+    final Map<String, String> headers = <String, String>{'CACHE-CONTROL': 'ABC'};
     await controller!.loadUrl('https://flutter.io', headers: headers);
 
     verify(mockWebViewPlatformController.loadUrl(
@@ -330,8 +323,7 @@ void main() {
   });
 
   testWidgets('Can go back', (WidgetTester tester) async {
-    when(mockWebViewPlatformController.canGoBack())
-        .thenAnswer((_) => Future<bool>.value(true));
+    when(mockWebViewPlatformController.canGoBack()).thenAnswer((_) => Future<bool>.value(true));
 
     WebViewController? controller;
     await tester.pumpWidget(
@@ -348,8 +340,7 @@ void main() {
   });
 
   testWidgets("Can't go forward", (WidgetTester tester) async {
-    when(mockWebViewPlatformController.canGoForward())
-        .thenAnswer((_) => Future<bool>.value(false));
+    when(mockWebViewPlatformController.canGoForward()).thenAnswer((_) => Future<bool>.value(false));
 
     WebViewController? controller;
     await tester.pumpWidget(
@@ -396,8 +387,7 @@ void main() {
   });
 
   testWidgets('Current URL', (WidgetTester tester) async {
-    when(mockWebViewPlatformController.currentUrl())
-        .thenAnswer((_) => Future<String>.value('https://youtube.com'));
+    when(mockWebViewPlatformController.currentUrl()).thenAnswer((_) => Future<String>.value('https://youtube.com'));
 
     WebViewController? controller;
     await tester.pumpWidget(
@@ -449,8 +439,7 @@ void main() {
         reason: 'should get the argument');
   });
 
-  testWidgets('evaluate Javascript with JavascriptMode disabled',
-      (WidgetTester tester) async {
+  testWidgets('evaluate Javascript with JavascriptMode disabled', (WidgetTester tester) async {
     late WebViewController controller;
     await tester.pumpWidget(
       WebView(
@@ -483,8 +472,7 @@ void main() {
     verify(mockWebViewPlatformController.runJavascript('fake js string'));
   });
 
-  testWidgets('runJavaScript with JavascriptMode disabled',
-      (WidgetTester tester) async {
+  testWidgets('runJavaScript with JavascriptMode disabled', (WidgetTester tester) async {
     late WebViewController controller;
     await tester.pumpWidget(
       WebView(
@@ -502,8 +490,7 @@ void main() {
   });
 
   testWidgets('runJavaScriptReturningResult', (WidgetTester tester) async {
-    when(mockWebViewPlatformController
-            .runJavascriptReturningResult('fake js string'))
+    when(mockWebViewPlatformController.runJavascriptReturningResult('fake js string'))
         .thenAnswer((_) => Future<String>.value('fake js string'));
 
     late WebViewController controller;
@@ -516,13 +503,11 @@ void main() {
         },
       ),
     );
-    expect(await controller.runJavascriptReturningResult('fake js string'),
-        'fake js string',
+    expect(await controller.runJavascriptReturningResult('fake js string'), 'fake js string',
         reason: 'should get the argument');
   });
 
-  testWidgets('runJavaScriptReturningResult with JavascriptMode disabled',
-      (WidgetTester tester) async {
+  testWidgets('runJavaScriptReturningResult with JavascriptMode disabled', (WidgetTester tester) async {
     late WebViewController controller;
     await tester.pumpWidget(
       WebView(
@@ -551,8 +536,7 @@ void main() {
   });
 
   testWidgets('Cookies can be set', (WidgetTester tester) async {
-    const WebViewCookie cookie =
-        WebViewCookie(name: 'foo', value: 'bar', domain: 'flutter.dev');
+    const WebViewCookie cookie = WebViewCookie(name: 'foo', value: 'bar', domain: 'flutter.dev');
 
     await tester.pumpWidget(
       const WebView(
@@ -561,8 +545,7 @@ void main() {
     );
     final CookieManager cookieManager = CookieManager();
     await cookieManager.setCookie(cookie);
-    expect(mockWebViewCookieManagerPlatform.setCookieCalls,
-        <WebViewCookie>[cookie]);
+    expect(mockWebViewCookieManagerPlatform.setCookieCalls, <WebViewCookie>[cookie]);
   });
 
   testWidgets('Initial JavaScript channels', (WidgetTester tester) async {
@@ -570,10 +553,8 @@ void main() {
       WebView(
         initialUrl: 'https://youtube.com',
         javascriptChannels: <JavascriptChannel>{
-          JavascriptChannel(
-              name: 'Tts', onMessageReceived: (JavascriptMessage msg) {}),
-          JavascriptChannel(
-              name: 'Alarm', onMessageReceived: (JavascriptMessage msg) {}),
+          JavascriptChannel(name: 'Tts', onMessageReceived: (JavascriptMessage msg) {}),
+          JavascriptChannel(name: 'Alarm', onMessageReceived: (JavascriptMessage msg) {}),
         },
       ),
     );
@@ -583,8 +564,7 @@ void main() {
       creationParams: true,
     ).single as CreationParams;
 
-    expect(params.javascriptChannelNames,
-        unorderedEquals(<String>['Tts', 'Alarm']));
+    expect(params.javascriptChannelNames, unorderedEquals(<String>['Tts', 'Alarm']));
   });
 
   test('Only valid JavaScript channel names are allowed', () {
@@ -604,16 +584,13 @@ void main() {
     expect(createChannel(''), throwsAssertionError);
   });
 
-  testWidgets('Unique JavaScript channel names are required',
-      (WidgetTester tester) async {
+  testWidgets('Unique JavaScript channel names are required', (WidgetTester tester) async {
     await tester.pumpWidget(
       WebView(
         initialUrl: 'https://youtube.com',
         javascriptChannels: <JavascriptChannel>{
-          JavascriptChannel(
-              name: 'Alarm', onMessageReceived: (JavascriptMessage msg) {}),
-          JavascriptChannel(
-              name: 'Alarm', onMessageReceived: (JavascriptMessage msg) {}),
+          JavascriptChannel(name: 'Alarm', onMessageReceived: (JavascriptMessage msg) {}),
+          JavascriptChannel(name: 'Alarm', onMessageReceived: (JavascriptMessage msg) {}),
         },
       ),
     );
@@ -625,10 +602,8 @@ void main() {
       WebView(
         initialUrl: 'https://youtube.com',
         javascriptChannels: <JavascriptChannel>{
-          JavascriptChannel(
-              name: 'Tts', onMessageReceived: (JavascriptMessage msg) {}),
-          JavascriptChannel(
-              name: 'Alarm', onMessageReceived: (JavascriptMessage msg) {}),
+          JavascriptChannel(name: 'Tts', onMessageReceived: (JavascriptMessage msg) {}),
+          JavascriptChannel(name: 'Alarm', onMessageReceived: (JavascriptMessage msg) {}),
         },
       ),
     );
@@ -637,12 +612,9 @@ void main() {
       WebView(
         initialUrl: 'https://youtube.com',
         javascriptChannels: <JavascriptChannel>{
-          JavascriptChannel(
-              name: 'Tts', onMessageReceived: (JavascriptMessage msg) {}),
-          JavascriptChannel(
-              name: 'Alarm2', onMessageReceived: (JavascriptMessage msg) {}),
-          JavascriptChannel(
-              name: 'Alarm3', onMessageReceived: (JavascriptMessage msg) {}),
+          JavascriptChannel(name: 'Tts', onMessageReceived: (JavascriptMessage msg) {}),
+          JavascriptChannel(name: 'Alarm2', onMessageReceived: (JavascriptMessage msg) {}),
+          JavascriptChannel(name: 'Alarm3', onMessageReceived: (JavascriptMessage msg) {}),
         },
       ),
     );
@@ -658,8 +630,7 @@ void main() {
     );
   });
 
-  testWidgets('Remove all JavaScript channels and then add',
-      (WidgetTester tester) async {
+  testWidgets('Remove all JavaScript channels and then add', (WidgetTester tester) async {
     // This covers a specific bug we had where after updating javascriptChannels to null,
     // updating it again with a subset of the previously registered channels fails as the
     // widget's cache of current channel wasn't properly updated when updating javascriptChannels to
@@ -668,8 +639,7 @@ void main() {
       WebView(
         initialUrl: 'https://youtube.com',
         javascriptChannels: <JavascriptChannel>{
-          JavascriptChannel(
-              name: 'Tts', onMessageReceived: (JavascriptMessage msg) {}),
+          JavascriptChannel(name: 'Tts', onMessageReceived: (JavascriptMessage msg) {}),
         },
       ),
     );
@@ -684,8 +654,7 @@ void main() {
       WebView(
         initialUrl: 'https://youtube.com',
         javascriptChannels: <JavascriptChannel>{
-          JavascriptChannel(
-              name: 'Tts', onMessageReceived: (JavascriptMessage msg) {}),
+          JavascriptChannel(name: 'Tts', onMessageReceived: (JavascriptMessage msg) {}),
         },
       ),
     );
@@ -930,14 +899,11 @@ void main() {
 
       await tester.pumpWidget(WebView(
         initialUrl: 'https://youtube.com',
-        navigationDelegate: (NavigationRequest r) =>
-            NavigationDecision.navigate,
+        navigationDelegate: (NavigationRequest r) => NavigationDecision.navigate,
       ));
 
       final WebSettings updateSettings =
-          verify(mockWebViewPlatformController.updateSettings(captureAny))
-              .captured
-              .single as WebSettings;
+          verify(mockWebViewPlatformController.updateSettings(captureAny)).captured.single as WebSettings;
 
       expect(updateSettings.hasNavigationDelegate, true);
     });
@@ -950,9 +916,7 @@ void main() {
           navigationDelegate: (NavigationRequest request) {
             navigationRequests.add(request);
             // Only allow navigating to https://flutter.dev
-            return request.url == 'https://flutter.dev'
-                ? NavigationDecision.navigate
-                : NavigationDecision.prevent;
+            return request.url == 'https://flutter.dev' ? NavigationDecision.navigate : NavigationDecision.prevent;
           }));
 
       final List<dynamic> args = captureBuildArgs(
@@ -964,8 +928,7 @@ void main() {
       final CreationParams params = args[0] as CreationParams;
       expect(params.webSettings!.hasNavigationDelegate, true);
 
-      final WebViewPlatformCallbacksHandler handler =
-          args[1] as WebViewPlatformCallbacksHandler;
+      final WebViewPlatformCallbacksHandler handler = args[1] as WebViewPlatformCallbacksHandler;
 
       // The navigation delegate only allows navigation to https://flutter.dev
       // so we should still be in https://youtube.com.
@@ -1026,9 +989,7 @@ void main() {
       ));
 
       final WebSettings enabledSettings =
-          verify(mockWebViewPlatformController.updateSettings(captureAny))
-              .captured
-              .last as WebSettings;
+          verify(mockWebViewPlatformController.updateSettings(captureAny)).captured.last as WebSettings;
       expect(enabledSettings.debuggingEnabled, true);
 
       await tester.pumpWidget(WebView(
@@ -1037,9 +998,7 @@ void main() {
       ));
 
       final WebSettings disabledSettings =
-          verify(mockWebViewPlatformController.updateSettings(captureAny))
-              .captured
-              .last as WebSettings;
+          verify(mockWebViewPlatformController.updateSettings(captureAny)).captured.last as WebSettings;
       expect(disabledSettings.debuggingEnabled, false);
     });
   });
@@ -1079,9 +1038,7 @@ void main() {
       ));
 
       final WebSettings enabledSettings =
-          verify(mockWebViewPlatformController.updateSettings(captureAny))
-              .captured
-              .last as WebSettings;
+          verify(mockWebViewPlatformController.updateSettings(captureAny)).captured.last as WebSettings;
       // Zoom defaults to true, so no changes are made to settings.
       expect(enabledSettings.zoomEnabled, isNull);
 
@@ -1091,9 +1048,7 @@ void main() {
       ));
 
       final WebSettings disabledSettings =
-          verify(mockWebViewPlatformController.updateSettings(captureAny))
-              .captured
-              .last as WebSettings;
+          verify(mockWebViewPlatformController.updateSettings(captureAny)).captured.last as WebSettings;
       expect(disabledSettings.zoomEnabled, isFalse);
     });
   });
@@ -1205,9 +1160,7 @@ void main() {
     ));
 
     final WebSettings settings =
-        verify(mockWebViewPlatformController.updateSettings(captureAny))
-            .captured
-            .last as WebSettings;
+        verify(mockWebViewPlatformController.updateSettings(captureAny)).captured.last as WebSettings;
     expect(settings.userAgent.value, 'UA');
   });
 }
@@ -1223,21 +1176,16 @@ List<dynamic> captureBuildArgs(
 }) {
   return verify(mockWebViewPlatform.build(
     context: context ? captureAnyNamed('context') : anyNamed('context'),
-    creationParams: creationParams
-        ? captureAnyNamed('creationParams')
-        : anyNamed('creationParams'),
+    creationParams: creationParams ? captureAnyNamed('creationParams') : anyNamed('creationParams'),
     webViewPlatformCallbacksHandler: webViewPlatformCallbacksHandler
         ? captureAnyNamed('webViewPlatformCallbacksHandler')
         : anyNamed('webViewPlatformCallbacksHandler'),
     javascriptChannelRegistry: javascriptChannelRegistry
         ? captureAnyNamed('javascriptChannelRegistry')
         : anyNamed('javascriptChannelRegistry'),
-    onWebViewPlatformCreated: onWebViewPlatformCreated
-        ? captureAnyNamed('onWebViewPlatformCreated')
-        : anyNamed('onWebViewPlatformCreated'),
-    gestureRecognizers: gestureRecognizers
-        ? captureAnyNamed('gestureRecognizers')
-        : anyNamed('gestureRecognizers'),
+    onWebViewPlatformCreated:
+        onWebViewPlatformCreated ? captureAnyNamed('onWebViewPlatformCreated') : anyNamed('onWebViewPlatformCreated'),
+    gestureRecognizers: gestureRecognizers ? captureAnyNamed('gestureRecognizers') : anyNamed('gestureRecognizers'),
   )).captured;
 }
 
@@ -1262,8 +1210,7 @@ class TestPlatformWebViewState extends State<TestPlatformWebView> {
   @override
   void initState() {
     super.initState();
-    final WebViewPlatformCreatedCallback? onWebViewPlatformCreated =
-        widget.onWebViewPlatformCreated;
+    final WebViewPlatformCreatedCallback? onWebViewPlatformCreated = widget.onWebViewPlatformCreated;
     if (onWebViewPlatformCreated != null) {
       onWebViewPlatformCreated(widget.mockWebViewPlatformController);
     }
@@ -1288,8 +1235,8 @@ class MyWebViewPlatform implements WebViewPlatform {
     Set<Factory<OneSequenceGestureRecognizer>>? gestureRecognizers,
   }) {
     assert(onWebViewPlatformCreated != null);
-    lastPlatformBuilt = MyWebViewPlatformController(
-        creationParams, gestureRecognizers, webViewPlatformCallbacksHandler);
+    lastPlatformBuilt =
+        MyWebViewPlatformController(creationParams, gestureRecognizers, webViewPlatformCallbacksHandler);
     onWebViewPlatformCreated!(lastPlatformBuilt);
     return Container();
   }
@@ -1301,8 +1248,8 @@ class MyWebViewPlatform implements WebViewPlatform {
 }
 
 class MyWebViewPlatformController extends WebViewPlatformController {
-  MyWebViewPlatformController(this.creationParams, this.gestureRecognizers,
-      WebViewPlatformCallbacksHandler platformHandler)
+  MyWebViewPlatformController(
+      this.creationParams, this.gestureRecognizers, WebViewPlatformCallbacksHandler platformHandler)
       : super(platformHandler);
 
   CreationParams? creationParams;
@@ -1325,18 +1272,14 @@ class MatchesWebSettings extends Matcher {
   final WebSettings? _webSettings;
 
   @override
-  Description describe(Description description) =>
-      description.add('$_webSettings');
+  Description describe(Description description) => description.add('$_webSettings');
 
   @override
-  bool matches(
-      covariant WebSettings webSettings, Map<dynamic, dynamic> matchState) {
+  bool matches(covariant WebSettings webSettings, Map<dynamic, dynamic> matchState) {
     return _webSettings!.javascriptMode == webSettings.javascriptMode &&
-        _webSettings!.hasNavigationDelegate ==
-            webSettings.hasNavigationDelegate &&
+        _webSettings!.hasNavigationDelegate == webSettings.hasNavigationDelegate &&
         _webSettings!.debuggingEnabled == webSettings.debuggingEnabled &&
-        _webSettings!.gestureNavigationEnabled ==
-            webSettings.gestureNavigationEnabled &&
+        _webSettings!.gestureNavigationEnabled == webSettings.gestureNavigationEnabled &&
         _webSettings!.userAgent == webSettings.userAgent &&
         _webSettings!.zoomEnabled == webSettings.zoomEnabled;
   }
@@ -1348,15 +1291,12 @@ class MatchesCreationParams extends Matcher {
   final CreationParams _creationParams;
 
   @override
-  Description describe(Description description) =>
-      description.add('$_creationParams');
+  Description describe(Description description) => description.add('$_creationParams');
 
   @override
-  bool matches(covariant CreationParams creationParams,
-      Map<dynamic, dynamic> matchState) {
+  bool matches(covariant CreationParams creationParams, Map<dynamic, dynamic> matchState) {
     return _creationParams.initialUrl == creationParams.initialUrl &&
-        MatchesWebSettings(_creationParams.webSettings)
-            .matches(creationParams.webSettings!, matchState) &&
+        MatchesWebSettings(_creationParams.webSettings).matches(creationParams.webSettings!, matchState) &&
         orderedEquals(_creationParams.javascriptChannelNames)
             .matches(creationParams.javascriptChannelNames, matchState);
   }

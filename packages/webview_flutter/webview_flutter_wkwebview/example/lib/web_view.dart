@@ -5,9 +5,7 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/widgets.dart';
+import 'package:alkami_core_dependencies/alkami_core_dependencies.dart' hide CreationParams;
 import 'package:webview_flutter_platform_interface/webview_flutter_platform_interface.dart';
 import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 
@@ -24,8 +22,7 @@ typedef WebViewCreatedCallback = void Function(WebViewController controller);
 /// `navigation` should be handled.
 ///
 /// See also: [WebView.navigationDelegate].
-typedef NavigationDelegate = FutureOr<NavigationDecision> Function(
-    NavigationRequest navigation);
+typedef NavigationDelegate = FutureOr<NavigationDecision> Function(NavigationRequest navigation);
 
 /// Signature for when a [WebView] has started loading a page.
 typedef PageStartedCallback = void Function(String url);
@@ -68,8 +65,7 @@ class WebView extends StatefulWidget {
     this.gestureNavigationEnabled = false,
     this.userAgent,
     this.zoomEnabled = true,
-    this.initialMediaPlaybackPolicy =
-        AutoMediaPlaybackPolicy.require_user_action_for_all_media_types,
+    this.initialMediaPlaybackPolicy = AutoMediaPlaybackPolicy.require_user_action_for_all_media_types,
     this.allowsInlineMediaPlayback = false,
     this.backgroundColor,
   })  : assert(javascriptMode != null),
@@ -244,8 +240,7 @@ class WebView extends StatefulWidget {
 }
 
 class _WebViewState extends State<WebView> {
-  final Completer<WebViewController> _controller =
-      Completer<WebViewController>();
+  final Completer<WebViewController> _controller = Completer<WebViewController>();
   late final JavascriptChannelRegistry _javascriptChannelRegistry;
   late final _PlatformCallbacksHandler _platformCallbacksHandler;
 
@@ -253,8 +248,7 @@ class _WebViewState extends State<WebView> {
   void initState() {
     super.initState();
     _platformCallbacksHandler = _PlatformCallbacksHandler(widget);
-    _javascriptChannelRegistry =
-        JavascriptChannelRegistry(widget.javascriptChannels);
+    _javascriptChannelRegistry = JavascriptChannelRegistry(widget.javascriptChannels);
   }
 
   @override
@@ -269,8 +263,7 @@ class _WebViewState extends State<WebView> {
   Widget build(BuildContext context) {
     return WebView.platform.build(
       context: context,
-      onWebViewPlatformCreated:
-          (WebViewPlatformController? webViewPlatformController) {
+      onWebViewPlatformCreated: (WebViewPlatformController? webViewPlatformController) {
         final WebViewController controller = WebViewController._(
           widget,
           webViewPlatformController!,
@@ -286,8 +279,7 @@ class _WebViewState extends State<WebView> {
       creationParams: CreationParams(
         initialUrl: widget.initialUrl,
         webSettings: _webSettingsFromWidget(widget),
-        javascriptChannelNames:
-            _javascriptChannelRegistry.channels.keys.toSet(),
+        javascriptChannelNames: _javascriptChannelRegistry.channels.keys.toSet(),
         autoMediaPlaybackPolicy: widget.initialMediaPlaybackPolicy,
         userAgent: widget.userAgent,
         cookies: widget.initialCookies,
@@ -442,29 +434,22 @@ class WebViewController {
   Future<void> _updateWidget(WebView widget) async {
     _widget = widget;
     await _updateSettings(_webSettingsFromWidget(widget));
-    await _updateJavascriptChannels(
-        _javascriptChannelRegistry.channels.values.toSet());
+    await _updateJavascriptChannels(_javascriptChannelRegistry.channels.values.toSet());
   }
 
   Future<void> _updateSettings(WebSettings newSettings) {
-    final WebSettings update =
-        _clearUnchangedWebSettings(_settings, newSettings);
+    final WebSettings update = _clearUnchangedWebSettings(_settings, newSettings);
     _settings = newSettings;
     return _webViewPlatformController.updateSettings(update);
   }
 
-  Future<void> _updateJavascriptChannels(
-      Set<JavascriptChannel>? newChannels) async {
-    final Set<String> currentChannels =
-        _javascriptChannelRegistry.channels.keys.toSet();
+  Future<void> _updateJavascriptChannels(Set<JavascriptChannel>? newChannels) async {
+    final Set<String> currentChannels = _javascriptChannelRegistry.channels.keys.toSet();
     final Set<String> newChannelNames = _extractChannelNames(newChannels);
-    final Set<String> channelsToAdd =
-        newChannelNames.difference(currentChannels);
-    final Set<String> channelsToRemove =
-        currentChannels.difference(newChannelNames);
+    final Set<String> channelsToAdd = newChannelNames.difference(currentChannels);
+    final Set<String> channelsToRemove = currentChannels.difference(newChannelNames);
     if (channelsToRemove.isNotEmpty) {
-      await _webViewPlatformController
-          .removeJavascriptChannels(channelsToRemove);
+      await _webViewPlatformController.removeJavascriptChannels(channelsToRemove);
     }
     if (channelsToAdd.isNotEmpty) {
       await _webViewPlatformController.addJavascriptChannels(channelsToAdd);
@@ -476,8 +461,8 @@ class WebViewController {
   // ignore: public_member_api_docs
   Future<String> evaluateJavascript(String javascriptString) {
     if (_settings.javascriptMode == JavascriptMode.disabled) {
-      return Future<String>.error(FlutterError(
-          'JavaScript mode must be enabled/unrestricted when calling evaluateJavascript.'));
+      return Future<String>.error(
+          FlutterError('JavaScript mode must be enabled/unrestricted when calling evaluateJavascript.'));
     }
     return _webViewPlatformController.evaluateJavascript(javascriptString);
   }
@@ -491,8 +476,8 @@ class WebViewController {
   ///  embedded in the main frame HTML has been loaded.
   Future<void> runJavascript(String javaScriptString) {
     if (_settings.javascriptMode == JavascriptMode.disabled) {
-      return Future<void>.error(FlutterError(
-          'Javascript mode must be enabled/unrestricted when calling runJavascript.'));
+      return Future<void>.error(
+          FlutterError('Javascript mode must be enabled/unrestricted when calling runJavascript.'));
     }
     return _webViewPlatformController.runJavascript(javaScriptString);
   }
@@ -512,11 +497,10 @@ class WebViewController {
   /// embedded in the main frame HTML has been loaded.
   Future<String> runJavascriptReturningResult(String javaScriptString) {
     if (_settings.javascriptMode == JavascriptMode.disabled) {
-      return Future<String>.error(FlutterError(
-          'Javascript mode must be enabled/unrestricted when calling runJavascriptReturningResult.'));
+      return Future<String>.error(
+          FlutterError('Javascript mode must be enabled/unrestricted when calling runJavascriptReturningResult.'));
     }
-    return _webViewPlatformController
-        .runJavascriptReturningResult(javaScriptString);
+    return _webViewPlatformController.runJavascriptReturningResult(javaScriptString);
   }
 
   /// Returns the title of the currently loaded page.
@@ -553,8 +537,7 @@ class WebViewController {
   }
 
   // This method assumes that no fields in `currentValue` are null.
-  WebSettings _clearUnchangedWebSettings(
-      WebSettings currentValue, WebSettings newValue) {
+  WebSettings _clearUnchangedWebSettings(WebSettings currentValue, WebSettings newValue) {
     assert(currentValue.javascriptMode != null);
     assert(currentValue.hasNavigationDelegate != null);
     assert(currentValue.hasProgressTracking != null);
@@ -596,9 +579,8 @@ class WebViewController {
   }
 
   Set<String> _extractChannelNames(Set<JavascriptChannel>? channels) {
-    final Set<String> channelNames = channels == null
-        ? <String>{}
-        : channels.map((JavascriptChannel channel) => channel.name).toSet();
+    final Set<String> channelNames =
+        channels == null ? <String>{} : channels.map((JavascriptChannel channel) => channel.name).toSet();
     return channelNames;
   }
 
@@ -685,8 +667,7 @@ class WebViewCookieManager extends WebViewCookieManagerPlatform {
       if (Platform.isIOS) {
         WebViewCookieManagerPlatform.instance = WKWebViewCookieManager();
       } else {
-        throw AssertionError(
-            'This platform is currently unsupported for webview_flutter_wkwebview.');
+        throw AssertionError('This platform is currently unsupported for webview_flutter_wkwebview.');
       }
     }
     return WebViewCookieManagerPlatform.instance!;

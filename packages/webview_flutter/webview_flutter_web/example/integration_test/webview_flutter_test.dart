@@ -5,10 +5,8 @@
 import 'dart:async';
 import 'dart:html' as html;
 
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:integration_test/integration_test.dart';
+import 'package:alkami_core_dependencies/alkami_core_dependencies.dart';
+import 'package:alkami_core_dev_dependencies/alkami_core_dev_dependencies.dart';
 import 'package:webview_flutter_web_example/web_view.dart';
 
 void main() {
@@ -22,8 +20,7 @@ void main() {
   const String secondaryUrl = 'https://www.google.com/robots.txt';
 
   testWidgets('initialUrl', (WidgetTester tester) async {
-    final Completer<WebViewController> controllerCompleter =
-        Completer<WebViewController>();
+    final Completer<WebViewController> controllerCompleter = Completer<WebViewController>();
     await tester.pumpWidget(
       Directionality(
         textDirection: TextDirection.ltr,
@@ -39,15 +36,13 @@ void main() {
     await controllerCompleter.future;
 
     // Assert an iframe has been rendered to the DOM with the correct src attribute.
-    final html.IFrameElement? element =
-        html.document.querySelector('iframe') as html.IFrameElement?;
+    final html.IFrameElement? element = html.document.querySelector('iframe') as html.IFrameElement?;
     expect(element, isNotNull);
     expect(element!.src, primaryUrl);
   });
 
   testWidgets('loadUrl', (WidgetTester tester) async {
-    final Completer<WebViewController> controllerCompleter =
-        Completer<WebViewController>();
+    final Completer<WebViewController> controllerCompleter = Completer<WebViewController>();
     await tester.pumpWidget(
       Directionality(
         textDirection: TextDirection.ltr,
@@ -64,8 +59,7 @@ void main() {
     await controller.loadUrl(secondaryUrl);
 
     // Assert an iframe has been rendered to the DOM with the correct src attribute.
-    final html.IFrameElement? element =
-        html.document.querySelector('iframe') as html.IFrameElement?;
+    final html.IFrameElement? element = html.document.querySelector('iframe') as html.IFrameElement?;
     expect(element, isNotNull);
     expect(element!.src, secondaryUrl);
   });

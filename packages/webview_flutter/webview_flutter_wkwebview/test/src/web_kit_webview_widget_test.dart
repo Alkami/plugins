@@ -4,10 +4,8 @@
 
 import 'dart:async';
 
-import 'package:flutter/widgets.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
+import 'package:alkami_core_dependencies/alkami_core_dependencies.dart' hide CreationParams;
+import 'package:alkami_core_dev_dependencies/alkami_core_dev_dependencies.dart';
 import 'package:webview_flutter_platform_interface/webview_flutter_platform_interface.dart';
 import 'package:webview_flutter_wkwebview/src/foundation/foundation.dart';
 import 'package:webview_flutter_wkwebview/src/web_kit/web_kit.dart';
@@ -89,13 +87,11 @@ void main() {
       await buildWidget(tester);
     });
 
-    testWidgets('Requests to open a new window loads request in same window',
-        (WidgetTester tester) async {
+    testWidgets('Requests to open a new window loads request in same window', (WidgetTester tester) async {
       await buildWidget(tester);
 
-      final dynamic onCreateWebView =
-          verify(mockUIDelegate.onCreateWebView = captureAny).captured.single
-              as void Function(WKWebViewConfiguration, WKNavigationAction);
+      final dynamic onCreateWebView = verify(mockUIDelegate.onCreateWebView = captureAny).captured.single as void
+          Function(WKWebViewConfiguration, WKNavigationAction);
 
       const NSUrlRequest request = NSUrlRequest(url: 'https://google.com');
       onCreateWebView(
@@ -114,8 +110,7 @@ void main() {
         await buildWidget(
           tester,
           creationParams: CreationParams(
-            autoMediaPlaybackPolicy:
-                AutoMediaPlaybackPolicy.require_user_action_for_all_media_types,
+            autoMediaPlaybackPolicy: AutoMediaPlaybackPolicy.require_user_action_for_all_media_types,
             webSettings: WebSettings(
               userAgent: const WebSetting<String?>.absent(),
               hasNavigationDelegate: false,
@@ -123,9 +118,7 @@ void main() {
           ),
         );
 
-        verify(
-            mockWebViewConfiguration.mediaTypesRequiringUserActionForPlayback =
-                <WKAudiovisualMediaType>{
+        verify(mockWebViewConfiguration.mediaTypesRequiringUserActionForPlayback = <WKAudiovisualMediaType>{
           WKAudiovisualMediaType.all,
         });
       });
@@ -142,9 +135,7 @@ void main() {
           ),
         );
 
-        verify(
-            mockWebViewConfiguration.mediaTypesRequiringUserActionForPlayback =
-                <WKAudiovisualMediaType>{
+        verify(mockWebViewConfiguration.mediaTypesRequiringUserActionForPlayback = <WKAudiovisualMediaType>{
           WKAudiovisualMediaType.none,
         });
       });
@@ -210,8 +201,7 @@ void main() {
 
         await testController.addJavascriptChannels(<String>{'c', 'd'});
         final List<dynamic> javaScriptChannels = verify(
-          mockUserContentController.addScriptMessageHandler(
-              captureAny, captureAny),
+          mockUserContentController.addScriptMessageHandler(captureAny, captureAny),
         ).captured;
         expect(
           javaScriptChannels[0],
@@ -225,9 +215,7 @@ void main() {
         expect(javaScriptChannels[3], 'd');
 
         final List<WKUserScript> userScripts =
-            verify(mockUserContentController.addUserScript(captureAny))
-                .captured
-                .cast<WKUserScript>();
+            verify(mockUserContentController.addUserScript(captureAny)).captured.cast<WKUserScript>();
         expect(userScripts[0].source, 'window.c = webkit.messageHandlers.c;');
         expect(
           userScripts[0].injectionTime,
@@ -258,8 +246,7 @@ void main() {
         verify(mockUserContentController.removeAllUserScripts());
 
         final List<dynamic> javaScriptChannels = verify(
-          mockUserContentController.addScriptMessageHandler(
-              captureAny, captureAny),
+          mockUserContentController.addScriptMessageHandler(captureAny, captureAny),
         ).captured;
         expect(
           javaScriptChannels[0],
@@ -268,9 +255,7 @@ void main() {
         expect(javaScriptChannels[1], 'd');
 
         final List<WKUserScript> userScripts =
-            verify(mockUserContentController.addUserScript(captureAny))
-                .captured
-                .cast<WKUserScript>();
+            verify(mockUserContentController.addUserScript(captureAny)).captured.cast<WKUserScript>();
         expect(userScripts[0].source, 'window.d = webkit.messageHandlers.d;');
         expect(
           userScripts[0].injectionTime,
@@ -289,16 +274,12 @@ void main() {
         await buildWidget(tester);
         await testController.addJavascriptChannels(<String>{'hello'});
 
-        final MockWKScriptMessageHandler messageHandler = verify(
-                mockUserContentController.addScriptMessageHandler(
-                    captureAny, 'hello'))
-            .captured
-            .single as MockWKScriptMessageHandler;
+        final MockWKScriptMessageHandler messageHandler =
+            verify(mockUserContentController.addScriptMessageHandler(captureAny, 'hello')).captured.single
+                as MockWKScriptMessageHandler;
 
         final dynamic didReceiveScriptMessage =
-            verify(messageHandler.didReceiveScriptMessage = captureAny)
-                .captured
-                .single as void Function(
+            verify(messageHandler.didReceiveScriptMessage = captureAny).captured.single as void Function(
           WKUserContentController userContentController,
           WKScriptMessage message,
         );

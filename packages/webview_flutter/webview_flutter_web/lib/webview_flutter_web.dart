@@ -4,11 +4,11 @@
 
 import 'dart:async';
 import 'dart:html';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/widgets.dart';
+
+import 'package:alkami_core_dependencies/alkami_core_dependencies.dart' hide CreationParams;
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:webview_flutter_platform_interface/webview_flutter_platform_interface.dart';
+
 import 'shims/dart_ui.dart' as ui;
 
 /// Builds an iframe based WebView.
@@ -41,8 +41,7 @@ class WebWebViewPlatform implements WebViewPlatform {
         if (onWebViewPlatformCreated == null) {
           return;
         }
-        final IFrameElement element =
-            document.getElementById('webview-$viewId')! as IFrameElement;
+        final IFrameElement element = document.getElementById('webview-$viewId')! as IFrameElement;
         if (creationParams.initialUrl != null) {
           element.src = creationParams.initialUrl;
         }
@@ -187,15 +186,10 @@ class WebWebViewPlatformController implements WebViewPlatformController {
     if (!request.uri.hasScheme) {
       throw ArgumentError('WebViewRequest#uri is required to have a scheme.');
     }
-    final HttpRequest httpReq = await _httpRequestFactory.request(
-        request.uri.toString(),
-        method: request.method.serialize(),
-        requestHeaders: request.headers,
-        sendData: request.body);
-    final String contentType =
-        httpReq.getResponseHeader('content-type') ?? 'text/html';
-    _element.src =
-        'data:$contentType,' + Uri.encodeFull(httpReq.responseText ?? '');
+    final HttpRequest httpReq = await _httpRequestFactory.request(request.uri.toString(),
+        method: request.method.serialize(), requestHeaders: request.headers, sendData: request.body);
+    final String contentType = httpReq.getResponseHeader('content-type') ?? 'text/html';
+    _element.src = 'data:$contentType,' + Uri.encodeFull(httpReq.responseText ?? '');
   }
 
   @override

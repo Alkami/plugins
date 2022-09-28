@@ -4,8 +4,7 @@
 
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
-import 'package:flutter/widgets.dart';
+import 'package:alkami_core_dependencies/alkami_core_dependencies.dart' hide CreationParams;
 import 'package:webview_flutter_platform_interface/webview_flutter_platform_interface.dart';
 
 import 'web_kit/web_kit.dart';
@@ -42,8 +41,7 @@ class WebKitWebViewWidget extends StatefulWidget {
   final WebViewWidgetProxy webViewProxy;
 
   /// A callback to build a widget once [WKWebView] has been initialized.
-  final Widget Function(WebKitWebViewPlatformController controller)
-      onBuildWidget;
+  final Widget Function(WebKitWebViewPlatformController controller) onBuildWidget;
 
   @override
   State<StatefulWidget> createState() => _WebKitWebViewWidgetState();
@@ -99,8 +97,7 @@ class WebKitWebViewPlatformController extends WebViewPlatformController {
     };
   }
 
-  final Map<String, WKScriptMessageHandler> _scriptMessageHandlers =
-      <String, WKScriptMessageHandler>{};
+  final Map<String, WKScriptMessageHandler> _scriptMessageHandlers = <String, WKScriptMessageHandler>{};
 
   /// Handles callbacks that are made by navigation.
   final WebViewPlatformCallbacksHandler callbacksHandler;
@@ -154,8 +151,7 @@ class WebKitWebViewPlatformController extends WebViewPlatformController {
         break;
     }
 
-    configuration.mediaTypesRequiringUserActionForPlayback =
-        <WKAudiovisualMediaType>{
+    configuration.mediaTypesRequiringUserActionForPlayback = <WKAudiovisualMediaType>{
       if (requiresUserAction) WKAudiovisualMediaType.all,
       if (!requiresUserAction) WKAudiovisualMediaType.none,
     };
@@ -170,30 +166,26 @@ class WebKitWebViewPlatformController extends WebViewPlatformController {
         },
       ).map<Future<void>>(
         (String channelName) {
-          final WKScriptMessageHandler handler =
-              webViewProxy.createScriptMessageHandler()
-                ..didReceiveScriptMessage = (
-                  WKUserContentController userContentController,
-                  WKScriptMessage message,
-                ) {
-                  javascriptChannelRegistry.onJavascriptChannelMessage(
-                    message.name,
-                    message.body!.toString(),
-                  );
-                };
+          final WKScriptMessageHandler handler = webViewProxy.createScriptMessageHandler()
+            ..didReceiveScriptMessage = (
+              WKUserContentController userContentController,
+              WKScriptMessage message,
+            ) {
+              javascriptChannelRegistry.onJavascriptChannelMessage(
+                message.name,
+                message.body!.toString(),
+              );
+            };
           _scriptMessageHandlers[channelName] = handler;
 
-          final String wrapperSource =
-              'window.$channelName = webkit.messageHandlers.$channelName;';
+          final String wrapperSource = 'window.$channelName = webkit.messageHandlers.$channelName;';
           final WKUserScript wrapperScript = WKUserScript(
             wrapperSource,
             WKUserScriptInjectionTime.atDocumentStart,
             isMainFrameOnly: false,
           );
-          webView.configuration.userContentController
-              .addUserScript(wrapperScript);
-          return webView.configuration.userContentController
-              .addScriptMessageHandler(
+          webView.configuration.userContentController.addUserScript(wrapperScript);
+          return webView.configuration.userContentController.addScriptMessageHandler(
             handler,
             channelName,
           );
@@ -215,8 +207,7 @@ class WebKitWebViewPlatformController extends WebViewPlatformController {
     // shouldn't be removed. Note that this workaround could interfere with
     // exposing support for custom scripts from applications.
     webView.configuration.userContentController.removeAllUserScripts();
-    webView.configuration.userContentController
-        .removeAllScriptMessageHandlers();
+    webView.configuration.userContentController.removeAllScriptMessageHandlers();
 
     javascriptChannelNames.forEach(_scriptMessageHandlers.remove);
     final Set<String> remainingNames = _scriptMessageHandlers.keys.toSet();

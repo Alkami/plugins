@@ -1,10 +1,8 @@
+import 'package:alkami_core_dependencies/alkami_core_dependencies.dart' hide CreationParams;
 // Copyright 2013 The Flutter Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/widgets.dart';
 import 'package:webview_flutter_platform_interface/src/platform_interface/javascript_channel_registry.dart';
 
 import '../types/types.dart';
@@ -14,8 +12,7 @@ import 'webview_platform_controller.dart';
 /// Signature for callbacks reporting that a [WebViewPlatformController] was created.
 ///
 /// See also the `onWebViewPlatformCreated` argument for [WebViewPlatform.build].
-typedef WebViewPlatformCreatedCallback = void Function(
-    WebViewPlatformController? webViewPlatformController);
+typedef WebViewPlatformCreatedCallback = void Function(WebViewPlatformController? webViewPlatformController);
 
 /// Interface for a platform implementation of a WebView.
 ///
@@ -61,7 +58,6 @@ abstract class WebViewPlatform {
   /// Returns true if cookies were present before clearing, else false.
   /// Soon to be deprecated. 'Use `WebViewCookieManagerPlatform.clearCookies` instead.
   Future<bool> clearCookies() {
-    throw UnimplementedError(
-        'WebView clearCookies is not implemented on the current platform');
+    throw UnimplementedError('WebView clearCookies is not implemented on the current platform');
   }
 }

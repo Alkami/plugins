@@ -7,7 +7,7 @@ cd webview_flutter_platform_interface &&
 flutter pub get &&
 flutter pub run mplat_pr_tools validatePRIsReadyForMerge \
     --publishDryRun \
-    --minCoverage 61 &&
+    --minCoverage 59.92 &&
 
 echo &&
 echo webview_flutter_android: &&
@@ -40,7 +40,7 @@ cd ../webview_flutter &&
 flutter pub get &&
 flutter pub run mplat_pr_tools validatePRIsReadyForMerge \
     --publishDryRun \
-    --minCoverage 86 \
+    --minCoverage 85.71 \
     --no-validateVersion
     # Passing '--no-validateVersion' because the check in mplat_pr_tools finds cloudsmith versions with the other packages
     # because the other names contain "webview_flutter"

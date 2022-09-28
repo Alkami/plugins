@@ -1,7 +1,3 @@
-// Copyright 2013 The Flutter Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
-
 // ignore_for_file: public_member_api_docs
 
 import 'dart:async';
@@ -9,9 +5,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:alkami_core_dependencies/alkami_core_dependencies.dart';
 import 'package:webview_flutter_platform_interface/webview_flutter_platform_interface.dart';
 
 import 'navigation_decision.dart';
@@ -85,8 +79,7 @@ class _WebViewExample extends StatefulWidget {
 }
 
 class _WebViewExampleState extends State<_WebViewExample> {
-  final Completer<WebViewController> _controller =
-      Completer<WebViewController>();
+  final Completer<WebViewController> _controller = Completer<WebViewController>();
 
   @override
   void initState() {
@@ -133,8 +126,7 @@ class _WebViewExampleState extends State<_WebViewExample> {
   Widget favoriteButton() {
     return FutureBuilder<WebViewController>(
         future: _controller.future,
-        builder: (BuildContext context,
-            AsyncSnapshot<WebViewController> controller) {
+        builder: (BuildContext context, AsyncSnapshot<WebViewController> controller) {
           if (controller.hasData) {
             return FloatingActionButton(
               onPressed: () async {
@@ -157,8 +149,7 @@ Set<JavascriptChannel> _createJavascriptChannels(BuildContext context) {
     JavascriptChannel(
         name: 'Snackbar',
         onMessageReceived: (JavascriptMessage message) {
-          ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(content: Text(message.message)));
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message.message)));
         }),
   };
 }
@@ -188,8 +179,7 @@ class _SampleMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     return FutureBuilder<WebViewController>(
       future: controller,
-      builder:
-          (BuildContext context, AsyncSnapshot<WebViewController> controller) {
+      builder: (BuildContext context, AsyncSnapshot<WebViewController> controller) {
         return PopupMenuButton<_MenuOptions>(
           key: const ValueKey<String>('ShowPopupMenu'),
           onSelected: (_MenuOptions value) {
@@ -296,18 +286,14 @@ class _SampleMenu extends StatelessWidget {
     );
   }
 
-  Future<void> _onShowUserAgent(
-      WebViewController controller, BuildContext context) async {
+  Future<void> _onShowUserAgent(WebViewController controller, BuildContext context) async {
     // Send a message with the user agent string to the Snackbar JavaScript channel we registered
     // with the WebView.
-    await controller.runJavascript(
-        'Snackbar.postMessage("User Agent: " + navigator.userAgent);');
+    await controller.runJavascript('Snackbar.postMessage("User Agent: " + navigator.userAgent);');
   }
 
-  Future<void> _onListCookies(
-      WebViewController controller, BuildContext context) async {
-    final String cookies =
-        await controller.runJavascriptReturningResult('document.cookie');
+  Future<void> _onListCookies(WebViewController controller, BuildContext context) async {
+    final String cookies = await controller.runJavascriptReturningResult('document.cookie');
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Column(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -320,32 +306,28 @@ class _SampleMenu extends StatelessWidget {
     ));
   }
 
-  Future<void> _onAddToCache(
-      WebViewController controller, BuildContext context) async {
-    await controller.runJavascript(
-        'caches.open("test_caches_entry"); localStorage["test_localStorage"] = "dummy_entry";');
+  Future<void> _onAddToCache(WebViewController controller, BuildContext context) async {
+    await controller
+        .runJavascript('caches.open("test_caches_entry"); localStorage["test_localStorage"] = "dummy_entry";');
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
       content: Text('Added a test entry to cache.'),
     ));
   }
 
-  Future<void> _onListCache(
-      WebViewController controller, BuildContext context) async {
+  Future<void> _onListCache(WebViewController controller, BuildContext context) async {
     await controller.runJavascript('caches.keys()'
         '.then((cacheKeys) => JSON.stringify({"cacheKeys" : cacheKeys, "localStorage" : localStorage}))'
         '.then((caches) => Snackbar.postMessage(caches))');
   }
 
-  Future<void> _onClearCache(
-      WebViewController controller, BuildContext context) async {
+  Future<void> _onClearCache(WebViewController controller, BuildContext context) async {
     await controller.clearCache();
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
       content: Text('Cache cleared.'),
     ));
   }
 
-  Future<void> _onClearCookies(
-      WebViewController controller, BuildContext context) async {
+  Future<void> _onClearCookies(WebViewController controller, BuildContext context) async {
     final bool hadCookies = await WebView.platform.clearCookies();
     String message = 'There were cookies. Now, they are gone!';
     if (!hadCookies) {
@@ -356,32 +338,26 @@ class _SampleMenu extends StatelessWidget {
     ));
   }
 
-  Future<void> _onNavigationDelegateExample(
-      WebViewController controller, BuildContext context) async {
-    final String contentBase64 =
-        base64Encode(const Utf8Encoder().convert(kNavigationExamplePage));
+  Future<void> _onNavigationDelegateExample(WebViewController controller, BuildContext context) async {
+    final String contentBase64 = base64Encode(const Utf8Encoder().convert(kNavigationExamplePage));
     await controller.loadUrl('data:text/html;base64,$contentBase64');
   }
 
-  Future<void> _onLoadFlutterAssetExample(
-      WebViewController controller, BuildContext context) async {
+  Future<void> _onLoadFlutterAssetExample(WebViewController controller, BuildContext context) async {
     await controller.loadFlutterAsset('assets/www/index.html');
   }
 
-  Future<void> _onLoadLocalFileExample(
-      WebViewController controller, BuildContext context) async {
+  Future<void> _onLoadLocalFileExample(WebViewController controller, BuildContext context) async {
     final String pathToIndex = await _prepareLocalFile();
 
     await controller.loadFile(pathToIndex);
   }
 
-  Future<void> _onLoadHtmlStringExample(
-      WebViewController controller, BuildContext context) async {
+  Future<void> _onLoadHtmlStringExample(WebViewController controller, BuildContext context) async {
     await controller.loadHtmlString(kLocalFileExamplePage);
   }
 
-  Future<void> _onDoPostRequest(
-      WebViewController controller, BuildContext context) async {
+  Future<void> _onDoPostRequest(WebViewController controller, BuildContext context) async {
     final WebViewRequest request = WebViewRequest(
       uri: Uri.parse('https://httpbin.org/post'),
       method: WebViewRequestMethod.post,
@@ -391,11 +367,9 @@ class _SampleMenu extends StatelessWidget {
     await controller.loadRequest(request);
   }
 
-  Future<void> _onSetCookie(
-      WebViewController controller, BuildContext context) async {
+  Future<void> _onSetCookie(WebViewController controller, BuildContext context) async {
     await WebViewCookieManager.instance.setCookie(
-      const WebViewCookie(
-          name: 'foo', value: 'bar', domain: 'httpbin.org', path: '/anything'),
+      const WebViewCookie(name: 'foo', value: 'bar', domain: 'httpbin.org', path: '/anything'),
     );
     await controller.loadUrl('https://httpbin.org/anything');
   }
@@ -405,8 +379,7 @@ class _SampleMenu extends StatelessWidget {
       return Container();
     }
     final List<String> cookieList = cookies.split(';');
-    final Iterable<Text> cookieWidgets =
-        cookieList.map((String cookie) => Text(cookie));
+    final Iterable<Text> cookieWidgets = cookieList.map((String cookie) => Text(cookie));
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       mainAxisSize: MainAxisSize.min,
@@ -414,8 +387,7 @@ class _SampleMenu extends StatelessWidget {
     );
   }
 
-  Future<void> _onTransparentBackground(
-      WebViewController controller, BuildContext context) async {
+  Future<void> _onTransparentBackground(WebViewController controller, BuildContext context) async {
     await controller.loadHtmlString(kTransparentBackgroundPage);
   }
 
@@ -431,8 +403,7 @@ class _SampleMenu extends StatelessWidget {
 }
 
 class _NavigationControls extends StatelessWidget {
-  const _NavigationControls(this._webViewControllerFuture)
-      : assert(_webViewControllerFuture != null);
+  const _NavigationControls(this._webViewControllerFuture) : assert(_webViewControllerFuture != null);
 
   final Future<WebViewController> _webViewControllerFuture;
 
@@ -440,10 +411,8 @@ class _NavigationControls extends StatelessWidget {
   Widget build(BuildContext context) {
     return FutureBuilder<WebViewController>(
       future: _webViewControllerFuture,
-      builder:
-          (BuildContext context, AsyncSnapshot<WebViewController> snapshot) {
-        final bool webViewReady =
-            snapshot.connectionState == ConnectionState.done;
+      builder: (BuildContext context, AsyncSnapshot<WebViewController> snapshot) {
+        final bool webViewReady = snapshot.connectionState == ConnectionState.done;
         final WebViewController? controller = snapshot.data;
 
         return Row(
@@ -474,8 +443,7 @@ class _NavigationControls extends StatelessWidget {
                       } else {
                         // ignore: deprecated_member_use
                         Scaffold.of(context).showSnackBar(
-                          const SnackBar(
-                              content: Text('No forward history item')),
+                          const SnackBar(content: Text('No forward history item')),
                         );
                         return;
                       }

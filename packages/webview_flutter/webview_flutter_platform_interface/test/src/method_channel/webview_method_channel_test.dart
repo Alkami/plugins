@@ -4,10 +4,8 @@
 
 import 'dart:typed_data';
 
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
+import 'package:alkami_core_dependencies/alkami_core_dependencies.dart' hide CreationParams;
+import 'package:alkami_core_dev_dependencies/alkami_core_dev_dependencies.dart';
 import 'package:webview_flutter_platform_interface/src/method_channel/webview_method_channel.dart';
 import 'package:webview_flutter_platform_interface/webview_flutter_platform_interface.dart';
 
@@ -16,12 +14,9 @@ void main() {
 
   group('Tests on `plugin.flutter.io/webview_<channel_id>` channel', () {
     const int channelId = 1;
-    const MethodChannel channel =
-        MethodChannel('plugins.flutter.io/webview_$channelId');
-    final WebViewPlatformCallbacksHandler callbacksHandler =
-        MockWebViewPlatformCallbacksHandler();
-    final JavascriptChannelRegistry javascriptChannelRegistry =
-        MockJavascriptChannelRegistry();
+    const MethodChannel channel = MethodChannel('plugins.flutter.io/webview_$channelId');
+    final WebViewPlatformCallbacksHandler callbacksHandler = MockWebViewPlatformCallbacksHandler();
+    final JavascriptChannelRegistry javascriptChannelRegistry = MockJavascriptChannelRegistry();
 
     final List<MethodCall> log = <MethodCall>[];
     channel.setMockMethodCallHandler((MethodCall methodCall) async {
@@ -35,10 +30,7 @@ void main() {
           return true;
         case 'loadFile':
           if (methodCall.arguments == 'invalid file') {
-            throw PlatformException(
-                code: 'loadFile_failed',
-                message: 'Failed loading file.',
-                details: null);
+            throw PlatformException(code: 'loadFile_failed', message: 'Failed loading file.', details: null);
           } else if (methodCall.arguments == 'some error') {
             throw PlatformException(
               code: 'some_error',
@@ -76,8 +68,7 @@ void main() {
       return null;
     });
 
-    final MethodChannelWebViewPlatform webViewPlatform =
-        MethodChannelWebViewPlatform(
+    final MethodChannelWebViewPlatform webViewPlatform = MethodChannelWebViewPlatform(
       channelId,
       callbacksHandler,
       javascriptChannelRegistry,
@@ -412,8 +403,7 @@ void main() {
     });
 
     test('updateSettings', () async {
-      final WebSettings settings =
-          WebSettings(userAgent: const WebSetting<String?>.of('Dart Test'));
+      final WebSettings settings = WebSettings(userAgent: const WebSetting<String?>.of('Dart Test'));
       await webViewPlatform.updateSettings(settings);
 
       expect(
@@ -463,8 +453,7 @@ void main() {
     });
 
     test('updateSettings without settings', () async {
-      final WebSettings settings =
-          WebSettings(userAgent: const WebSetting<String?>.absent());
+      final WebSettings settings = WebSettings(userAgent: const WebSetting<String?>.absent());
       await webViewPlatform.updateSettings(settings);
 
       expect(
@@ -474,8 +463,7 @@ void main() {
     });
 
     test('evaluateJavascript', () async {
-      final String evaluateJavascript =
-          await webViewPlatform.evaluateJavascript(
+      final String evaluateJavascript = await webViewPlatform.evaluateJavascript(
         'This simulates some JavaScript code.',
       );
 
@@ -508,8 +496,7 @@ void main() {
     });
 
     test('runJavascriptReturningResult', () async {
-      final String evaluateJavascript =
-          await webViewPlatform.runJavascriptReturningResult(
+      final String evaluateJavascript = await webViewPlatform.runJavascriptReturningResult(
         'This simulates some JavaScript code.',
       );
 
@@ -661,8 +648,7 @@ void main() {
           userAgent: const WebSetting<String?>.of('Dart Test'),
         ),
       );
-      final Map<String, dynamic> creationParamsMap =
-          MethodChannelWebViewPlatform.creationParamsToMap(creationParams);
+      final Map<String, dynamic> creationParamsMap = MethodChannelWebViewPlatform.creationParamsToMap(creationParams);
 
       expect(creationParamsMap['backgroundColor'], null);
     });
@@ -675,16 +661,14 @@ void main() {
           userAgent: const WebSetting<String?>.of('Dart Test'),
         ),
       );
-      final Map<String, dynamic> creationParamsMap =
-          MethodChannelWebViewPlatform.creationParamsToMap(creationParams);
+      final Map<String, dynamic> creationParamsMap = MethodChannelWebViewPlatform.creationParamsToMap(creationParams);
 
       expect(creationParamsMap['backgroundColor'], whiteColor.value);
     });
   });
 
   group('Tests on `plugins.flutter.io/cookie_manager` channel', () {
-    const MethodChannel cookieChannel =
-        MethodChannel('plugins.flutter.io/cookie_manager');
+    const MethodChannel cookieChannel = MethodChannel('plugins.flutter.io/cookie_manager');
 
     final List<MethodCall> log = <MethodCall>[];
     cookieChannel.setMockMethodCallHandler((MethodCall methodCall) async {
@@ -704,8 +688,7 @@ void main() {
     });
 
     test('clearCookies', () async {
-      final bool clearCookies =
-          await MethodChannelWebViewPlatform.clearCookies();
+      final bool clearCookies = await MethodChannelWebViewPlatform.clearCookies();
 
       expect(clearCookies, true);
       expect(
@@ -720,8 +703,8 @@ void main() {
     });
 
     test('setCookie', () async {
-      await MethodChannelWebViewPlatform.setCookie(const WebViewCookie(
-          name: 'foo', value: 'bar', domain: 'flutter.dev'));
+      await MethodChannelWebViewPlatform.setCookie(
+          const WebViewCookie(name: 'foo', value: 'bar', domain: 'flutter.dev'));
 
       expect(
         log,
@@ -741,8 +724,6 @@ void main() {
   });
 }
 
-class MockWebViewPlatformCallbacksHandler extends Mock
-    implements WebViewPlatformCallbacksHandler {}
+class MockWebViewPlatformCallbacksHandler extends Mock implements WebViewPlatformCallbacksHandler {}
 
-class MockJavascriptChannelRegistry extends Mock
-    implements JavascriptChannelRegistry {}
+class MockJavascriptChannelRegistry extends Mock implements JavascriptChannelRegistry {}

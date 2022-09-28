@@ -5,7 +5,7 @@
 import 'dart:typed_data';
 import 'dart:ui';
 
-import 'package:flutter/foundation.dart';
+import 'package:alkami_core_dependencies/alkami_core_dependencies.dart';
 import 'package:flutter/widgets.dart' show AndroidViewSurface;
 
 import 'android_webview.pigeon.dart';
