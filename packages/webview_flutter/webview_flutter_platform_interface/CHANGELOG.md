@@ -1,3 +1,19 @@
+# 3.4.0
+
+- chore:DEV-139004 publish to cloudsmith
+
+# 3.3.0
+
+- chore:DEV-139004 publish to cloudsmith
+
+# 3.1.0
+
+- chore:DEV-139004 publish to cloudsmith
+
+# 3.0.0
+
+- chore:DEV-139004 publish to cloudsmith
+
 ## 1.8.1
 
 * Update to use the `verify` method introduced in platform_plugin_interface 2.1.0.

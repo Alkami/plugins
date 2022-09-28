@@ -1,3 +1,19 @@
+# 3.4.0
+
+- chore:DEV-139004 publish to cloudsmith
+
+# 3.3.0
+
+- chore:DEV-139004 publish to cloudsmith
+
+# 3.1.0
+
+- chore:DEV-139004 publish to cloudsmith
+
+# 4.0.0
+
+- chore:DEV-139004 publish to cloudsmith
+
 ## 3.0.1
 
 * Removes a duplicate Android-specific integration test.

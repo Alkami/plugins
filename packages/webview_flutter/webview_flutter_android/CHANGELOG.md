@@ -1,3 +1,19 @@
+# 3.4.0
+
+- chore:DEV-139004 publish to cloudsmith
+
+# 3.3.0
+
+- chore:DEV-139004 publish to cloudsmith
+
+# 3.1.0
+
+- chore:DEV-139004 publish to cloudsmith
+
+# 3.0.0
+
+- chore:DEV-139004 publish to cloudsmith
+
 ## 2.8.3
 
 * Fixes a bug causing `debuggingEnabled` to always be set to true.
