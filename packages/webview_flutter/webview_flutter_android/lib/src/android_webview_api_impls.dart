@@ -4,7 +4,7 @@
 
 import 'dart:typed_data';
 
-import 'package:flutter/services.dart';
+import 'package:alkami_core_dependencies/alkami_core_dependencies.dart';
 
 import 'android_webview.dart';
 import 'android_webview.pigeon.dart';

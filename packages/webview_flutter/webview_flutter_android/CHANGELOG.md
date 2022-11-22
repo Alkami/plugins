@@ -1,3 +1,7 @@
+# 4.2.0
+
+- chore:DEV-144663 centralize dependencies
+
 # 3.4.0
 
 - chore:DEV-139004 publish to cloudsmith

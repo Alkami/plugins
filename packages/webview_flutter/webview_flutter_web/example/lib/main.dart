@@ -1,13 +1,9 @@
-// Copyright 2013 The Flutter Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
-
 // ignore_for_file: public_member_api_docs
 
 import 'dart:async';
 import 'dart:typed_data';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+
+import 'package:alkami_core_dependencies/alkami_core_dependencies.dart';
 import 'package:webview_flutter_platform_interface/webview_flutter_platform_interface.dart';
 
 import 'web_view.dart';
@@ -24,8 +20,7 @@ class _WebViewExample extends StatefulWidget {
 }
 
 class _WebViewExampleState extends State<_WebViewExample> {
-  final Completer<WebViewController> _controller =
-      Completer<WebViewController>();
+  final Completer<WebViewController> _controller = Completer<WebViewController>();
 
   @override
   Widget build(BuildContext context) {
@@ -59,8 +54,7 @@ class _SampleMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     return FutureBuilder<WebViewController>(
       future: controller,
-      builder:
-          (BuildContext context, AsyncSnapshot<WebViewController> controller) {
+      builder: (BuildContext context, AsyncSnapshot<WebViewController> controller) {
         return PopupMenuButton<_MenuOptions>(
           onSelected: (_MenuOptions value) {
             switch (value) {
@@ -80,8 +74,7 @@ class _SampleMenu extends StatelessWidget {
     );
   }
 
-  Future<void> _onDoPostRequest(
-      WebViewController controller, BuildContext context) async {
+  Future<void> _onDoPostRequest(WebViewController controller, BuildContext context) async {
     final WebViewRequest request = WebViewRequest(
       uri: Uri.parse('https://httpbin.org/post'),
       method: WebViewRequestMethod.post,

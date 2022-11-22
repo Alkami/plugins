@@ -6,6 +6,10 @@ environment:
   sdk: ">=2.15.0 <3.0.0"
 
 dependencies:
+  alkami_core_dependencies: 
+    hosted: https://dart.cloudsmith.io/alkami/flutter/
+    version: ^2.1.0
+
   flutter:
     sdk: flutter
   
@@ -20,6 +24,10 @@ dependencies:
     path: ../
 
 dev_dependencies:
+  alkami_core_dev_dependencies: 
+    hosted: https://dart.cloudsmith.io/alkami/flutter/
+    version: ^2.1.0
+
   espresso: ^0.1.0+2
   flutter_driver:
     sdk: flutter

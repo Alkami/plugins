@@ -1,12 +1,9 @@
+import 'package:alkami_core_dependencies/alkami_core_dependencies.dart' hide CreationParams;
 // Copyright 2013 The Flutter Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:webview_flutter_platform_interface/webview_flutter_platform_interface.dart';
 
 import 'src/android_webview.dart';
@@ -47,8 +44,7 @@ class SurfaceAndroidWebView extends AndroidWebView {
           ) {
             return AndroidViewSurface(
               controller: controller as AndroidViewController,
-              gestureRecognizers: gestureRecognizers ??
-                  const <Factory<OneSequenceGestureRecognizer>>{},
+              gestureRecognizers: gestureRecognizers ?? const <Factory<OneSequenceGestureRecognizer>>{},
               hitTestBehavior: PlatformViewHitTestBehavior.opaque,
             );
           },
@@ -60,8 +56,7 @@ class SurfaceAndroidWebView extends AndroidWebView {
               // we explicitly set it here so that the widget doesn't require an ambient
               // directionality.
               layoutDirection: TextDirection.rtl,
-              creationParams:
-                  InstanceManager.instance.getInstanceId(controller.webView),
+              creationParams: InstanceManager.instance.getInstanceId(controller.webView),
               creationParamsCodec: const StandardMessageCodec(),
             )
               ..addOnPlatformViewCreatedListener(params.onPlatformViewCreated)

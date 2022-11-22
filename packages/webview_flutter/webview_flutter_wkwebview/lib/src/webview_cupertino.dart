@@ -4,10 +4,7 @@
 
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
+import 'package:alkami_core_dependencies/alkami_core_dependencies.dart' hide CreationParams;
 import 'package:webview_flutter_platform_interface/webview_flutter_platform_interface.dart';
 
 /// Builds an iOS webview.
@@ -38,8 +35,7 @@ class CupertinoWebView implements WebViewPlatform {
         ));
       },
       gestureRecognizers: gestureRecognizers,
-      creationParams:
-          MethodChannelWebViewPlatform.creationParamsToMap(creationParams),
+      creationParams: MethodChannelWebViewPlatform.creationParamsToMap(creationParams),
       creationParamsCodec: const StandardMessageCodec(),
     );
   }

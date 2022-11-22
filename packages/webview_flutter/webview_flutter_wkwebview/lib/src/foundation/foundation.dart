@@ -4,7 +4,7 @@
 
 import 'dart:typed_data';
 
-import 'package:flutter/foundation.dart';
+import 'package:alkami_core_dependencies/alkami_core_dependencies.dart';
 
 /// A URL load request that is independent of protocol or URL scheme.
 ///

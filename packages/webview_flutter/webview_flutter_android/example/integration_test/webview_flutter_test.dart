@@ -1,7 +1,3 @@
-// Copyright 2013 The Flutter Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
-
 // This test is run using `flutter drive` by the CI (see /script/tool/README.md
 // in this repository for details on driving that tooling manually), but can
 // also be run using `flutter test` directly during development.
@@ -11,12 +7,8 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:integration_test/integration_test.dart';
+import 'package:alkami_core_dependencies/alkami_core_dependencies.dart';
+import 'package:alkami_core_dev_dependencies/alkami_core_dev_dependencies.dart';
 import 'package:webview_flutter_android/webview_android.dart';
 import 'package:webview_flutter_android/webview_surface_android.dart';
 import 'package:webview_flutter_android_example/navigation_decision.dart';

@@ -4,8 +4,7 @@
 
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:alkami_core_dependencies/alkami_core_dependencies.dart' hide CreationParams;
 import 'package:webview_flutter_platform_interface/webview_flutter_platform_interface.dart';
 import 'package:webview_flutter_web/webview_flutter_web.dart';
 
@@ -51,8 +50,7 @@ class WebView extends StatefulWidget {
 }
 
 class _WebViewState extends State<WebView> {
-  final Completer<WebViewController> _controller =
-      Completer<WebViewController>();
+  final Completer<WebViewController> _controller = Completer<WebViewController>();
   late final _PlatformCallbacksHandler _platformCallbacksHandler;
 
   @override
@@ -73,8 +71,7 @@ class _WebViewState extends State<WebView> {
   Widget build(BuildContext context) {
     return WebView.platform.build(
       context: context,
-      onWebViewPlatformCreated:
-          (WebViewPlatformController? webViewPlatformController) {
+      onWebViewPlatformCreated: (WebViewPlatformController? webViewPlatformController) {
         final WebViewController controller = WebViewController(
           widget,
           webViewPlatformController!,
@@ -90,8 +87,7 @@ class _WebViewState extends State<WebView> {
         initialUrl: widget.initialUrl,
         webSettings: _webSettingsFromWidget(widget),
       ),
-      javascriptChannelRegistry:
-          JavascriptChannelRegistry(<JavascriptChannel>{}),
+      javascriptChannelRegistry: JavascriptChannelRegistry(<JavascriptChannel>{}),
     );
   }
 }
@@ -100,8 +96,7 @@ class _PlatformCallbacksHandler implements WebViewPlatformCallbacksHandler {
   _PlatformCallbacksHandler();
 
   @override
-  FutureOr<bool> onNavigationRequest(
-      {required String url, required bool isForMainFrame}) {
+  FutureOr<bool> onNavigationRequest({required String url, required bool isForMainFrame}) {
     throw UnimplementedError();
   }
 
@@ -228,8 +223,7 @@ class WebViewController {
   }
 
   Future<void> _updateSettings(WebSettings newSettings) {
-    final WebSettings update =
-        _clearUnchangedWebSettings(_settings, newSettings);
+    final WebSettings update = _clearUnchangedWebSettings(_settings, newSettings);
     _settings = newSettings;
     return _webViewPlatformController.updateSettings(update);
   }
@@ -238,8 +232,8 @@ class WebViewController {
   // ignore: public_member_api_docs
   Future<String> evaluateJavascript(String javascriptString) {
     if (_settings.javascriptMode == JavascriptMode.disabled) {
-      return Future<String>.error(FlutterError(
-          'JavaScript mode must be enabled/unrestricted when calling evaluateJavascript.'));
+      return Future<String>.error(
+          FlutterError('JavaScript mode must be enabled/unrestricted when calling evaluateJavascript.'));
     }
     return _webViewPlatformController.evaluateJavascript(javascriptString);
   }
@@ -253,8 +247,8 @@ class WebViewController {
   //  embedded in the main frame HTML has been loaded.
   Future<void> runJavascript(String javaScriptString) {
     if (_settings.javascriptMode == JavascriptMode.disabled) {
-      return Future<void>.error(FlutterError(
-          'Javascript mode must be enabled/unrestricted when calling runJavascript.'));
+      return Future<void>.error(
+          FlutterError('Javascript mode must be enabled/unrestricted when calling runJavascript.'));
     }
     return _webViewPlatformController.runJavascript(javaScriptString);
   }
@@ -269,11 +263,10 @@ class WebViewController {
   /// embedded in the main frame HTML has been loaded.
   Future<String> runJavascriptReturningResult(String javaScriptString) {
     if (_settings.javascriptMode == JavascriptMode.disabled) {
-      return Future<String>.error(FlutterError(
-          'Javascript mode must be enabled/unrestricted when calling runJavascriptReturningResult.'));
+      return Future<String>.error(
+          FlutterError('Javascript mode must be enabled/unrestricted when calling runJavascriptReturningResult.'));
     }
-    return _webViewPlatformController
-        .runJavascriptReturningResult(javaScriptString);
+    return _webViewPlatformController.runJavascriptReturningResult(javaScriptString);
   }
 
   /// Returns the title of the currently loaded page.
@@ -310,8 +303,7 @@ class WebViewController {
   }
 
   // This method assumes that no fields in `currentValue` are null.
-  WebSettings _clearUnchangedWebSettings(
-      WebSettings currentValue, WebSettings newValue) {
+  WebSettings _clearUnchangedWebSettings(WebSettings currentValue, WebSettings newValue) {
     assert(currentValue.javascriptMode != null);
     assert(currentValue.hasNavigationDelegate != null);
     assert(currentValue.hasProgressTracking != null);
