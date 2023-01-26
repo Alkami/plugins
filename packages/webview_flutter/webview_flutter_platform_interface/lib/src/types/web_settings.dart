@@ -3,7 +3,6 @@ import 'package:alkami_core_dependencies/alkami_core_dependencies.dart';
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-
 import 'javascript_mode.dart';
 
 /// A single setting for configuring a WebViewPlatform which may be absent.
@@ -56,12 +55,11 @@ class WebSetting<T> {
       return false;
     }
 
-    return other is WebSetting<T> &&
-        other.isPresent == isPresent &&
-        other._value == _value;
+    return other is WebSetting<T> && other.isPresent == isPresent && other._value == _value;
   }
 
   @override
+  // ignore: deprecated_member_use
   int get hashCode => hashValues(_value, isPresent);
 }
 
@@ -125,7 +123,7 @@ class WebSettings {
 
   /// Sets whether the WebView should support zooming using its on-screen zoom controls and gestures.
   final bool? zoomEnabled;
-  
+
   /// Whether to allow geolocation in Android.
   ///
   /// See also: [WebView.geolocationEnabled]

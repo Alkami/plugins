@@ -1,3 +1,7 @@
+# 5.1.0
+
+- Upgrade to Flutter 3
+
 # 4.2.0
 
 - chore:DEV-144663 centralize dependencies
