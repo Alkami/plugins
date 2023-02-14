@@ -3,18 +3,19 @@ description: Demonstrates how to use the webview_flutter_android plugin.
 publish_to: none
 
 environment:
-  sdk: ">=2.15.0 <3.0.0"
+  sdk: ">=2.18.0 <3.0.0" # dart version
+  flutter: ">=3.3.0"
 
 dependencies:
   alkami_core_dependencies: 
     hosted: https://dart.cloudsmith.io/alkami/flutter/
-    version: ^2.1.0
+    version: ^3.0.0
 
   flutter:
     sdk: flutter
   
   path_provider: ^2.0.6
-  permission_handler: ^9.0.0
+  permission_handler: ^10.2.0
   webview_flutter_android:
     # When depending on this package from a real application you should use:
     #   webview_flutter: ^x.y.z
@@ -23,10 +24,16 @@ dependencies:
     # the parent directory to use the current plugin's version.
     path: ../
 
+# dependency_overrides:
+#   alkami_core_dependencies:
+#     path: ../../../../../flutter_platform/packages/alkami_core_dependencies
+
 dev_dependencies:
+#   alkami_core_dev_dependencies:
+#     path: ../../../../../flutter_platform/packages/alkami_core_dev_dependencies
   alkami_core_dev_dependencies: 
     hosted: https://dart.cloudsmith.io/alkami/flutter/
-    version: ^2.1.0
+    version: ^3.0.0
 
   espresso: ^0.1.0+2
   flutter_driver:

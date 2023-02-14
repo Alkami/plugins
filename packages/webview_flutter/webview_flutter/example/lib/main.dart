@@ -144,10 +144,9 @@ class _WebViewExampleState extends State<WebViewExample> {
     return JavascriptChannel(
         name: 'Toaster',
         onMessageReceived: (JavascriptMessage message) {
-          // ignore: deprecated_member_use
-          Scaffold.of(context).showSnackBar(
-            SnackBar(content: Text(message.message)),
-          );
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(message.message),
+          ));
         });
   }
 
@@ -159,10 +158,9 @@ class _WebViewExampleState extends State<WebViewExample> {
             return FloatingActionButton(
               onPressed: () async {
                 final String url = (await controller.data!.currentUrl())!;
-                // ignore: deprecated_member_use
-                Scaffold.of(context).showSnackBar(
-                  SnackBar(content: Text('Favorited $url')),
-                );
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Text('Favorited $url'),
+                ));
               },
               child: const Icon(Icons.favorite),
             );
@@ -313,8 +311,7 @@ class SampleMenu extends StatelessWidget {
 
   Future<void> _onListCookies(WebViewController controller, BuildContext context) async {
     final String cookies = await controller.runJavascriptReturningResult('document.cookie');
-    // ignore: deprecated_member_use
-    Scaffold.of(context).showSnackBar(SnackBar(
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         mainAxisSize: MainAxisSize.min,
@@ -329,8 +326,7 @@ class SampleMenu extends StatelessWidget {
   Future<void> _onAddToCache(WebViewController controller, BuildContext context) async {
     await controller
         .runJavascript('caches.open("test_caches_entry"); localStorage["test_localStorage"] = "dummy_entry";');
-    // ignore: deprecated_member_use
-    Scaffold.of(context).showSnackBar(const SnackBar(
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
       content: Text('Added a test entry to cache.'),
     ));
   }
@@ -343,8 +339,7 @@ class SampleMenu extends StatelessWidget {
 
   Future<void> _onClearCache(WebViewController controller, BuildContext context) async {
     await controller.clearCache();
-    // ignore: deprecated_member_use
-    Scaffold.of(context).showSnackBar(const SnackBar(
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
       content: Text('Cache cleared.'),
     ));
   }
@@ -355,8 +350,7 @@ class SampleMenu extends StatelessWidget {
     if (!hadCookies) {
       message = 'There are no cookies.';
     }
-    // ignore: deprecated_member_use
-    Scaffold.of(context).showSnackBar(SnackBar(
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(message),
     ));
   }
@@ -447,10 +441,9 @@ class NavigationControls extends StatelessWidget {
                       if (await controller!.canGoBack()) {
                         await controller.goBack();
                       } else {
-                        // ignore: deprecated_member_use
-                        Scaffold.of(context).showSnackBar(
-                          const SnackBar(content: Text('No back history item')),
-                        );
+                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          content: Text('No back history item'),
+                        ));
                         return;
                       }
                     },
@@ -463,10 +456,9 @@ class NavigationControls extends StatelessWidget {
                       if (await controller!.canGoForward()) {
                         await controller.goForward();
                       } else {
-                        // ignore: deprecated_member_use
-                        Scaffold.of(context).showSnackBar(
-                          const SnackBar(content: Text('No forward history item')),
-                        );
+                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          content: Text('No forward history item'),
+                        ));
                         return;
                       }
                     },
