@@ -42,5 +42,4 @@ echo &&
 echo webview_flutter_platform_interface: &&
 cd ../webview_flutter &&
 flutter pub get &&
-mplat_dart publish --no-github-release
-# Need to test out the mplat_dart github-release for this repo. mplat_pr_tools github release was not working here -mskolnick
+mplat_dart publish

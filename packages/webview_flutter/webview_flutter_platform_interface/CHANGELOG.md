@@ -1,3 +1,7 @@
+# 5.3.0
+
+- chore:DEV-144619 remove mplat_pr_tools dependency
+
 # 5.2.0
 
 - chore:DEV-144619 switch mplat_pr_tools to mplat_dart
