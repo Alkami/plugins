@@ -41,7 +41,7 @@ jobs:
 
       - name: Activate mplat
         run: |
-          dart pub global activate mobile_platform_cli_dart \
+          dart pub global activate mplat \
             --hosted-url https://dart.cloudsmith.io/alkami/flutter/
 
       - name: Publish
