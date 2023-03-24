@@ -1,3 +1,7 @@
+# 5.5.0
+
+- chore:DEV-152023 remove superfluous packages
+
 # 5.4.0
 
 - chore:DEV-151337 rename mplat_dart to mplat
