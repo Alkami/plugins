@@ -1,3 +1,7 @@
+# 5.6.0
+
+- enh: DEV-147361 auto publish hotfix branches 
+
 # 5.5.0
 
 - chore:DEV-152023 remove superfluous packages
