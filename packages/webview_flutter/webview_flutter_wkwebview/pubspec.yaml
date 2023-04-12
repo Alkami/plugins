@@ -2,7 +2,7 @@ name: webview_flutter_wkwebview
 description: A Flutter plugin that provides a WebView widget based on Apple's WKWebView control.
 repository: https://github.com/Alkami/plugins/tree/main/packages/webview_flutter
 publish_to: https://dart.cloudsmith.io/alkami/flutter/
-version: 5.7.0 # original version was 2.7.1 when this was forked
+version: 5.8.0 # original version was 2.7.1 when this was forked
 
 environment:
   sdk: ">=2.18.0 <3.0.0" # dart version
@@ -27,15 +27,7 @@ dependencies:
     hosted: https://dart.cloudsmith.io/alkami/flutter/
     version: ^5.0.0
 
-# dependency_overrides:
-#   alkami_core_dependencies:
-#     path: ../../../../flutter_platform/packages/alkami_core_dependencies
-#   webview_flutter_platform_interface:
-#     path: ../webview_flutter_platform_interface
-
 dev_dependencies:
-#   alkami_core_dev_dependencies:
-#     path: ../../../../flutter_platform/packages/alkami_core_dev_dependencies
   alkami_core_dev_dependencies: 
     hosted: https://dart.cloudsmith.io/alkami/flutter/
     version: ^3.0.0
