@@ -37,7 +37,7 @@ gradlew
 gradlew.bat
 gradle-wrapper.jar
 .flutter-plugins-dependencies
-*.iml
+
 
 generated_plugin_registrant.cc
 generated_plugin_registrant.h
