@@ -1,3 +1,7 @@
+# 5.10.0
+
+- enh: DEV-154830 update gradle and kotlin
+
 # 5.9.0
 
 - enh: DEV-153701 enhancements to Android Studio experience
