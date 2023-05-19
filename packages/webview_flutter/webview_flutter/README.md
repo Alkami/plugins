@@ -36,7 +36,7 @@ The mode is currently enabled by default. You should however make sure to set th
 ```groovy
 android {
     defaultConfig {
-        minSdkVersion 19
+        minSdkVersion 28
     }
 }
 ```
@@ -48,7 +48,7 @@ android {
     ```groovy
     android {
         defaultConfig {
-            minSdkVersion 20
+            minSdkVersion 28
         }
     }
     ```
