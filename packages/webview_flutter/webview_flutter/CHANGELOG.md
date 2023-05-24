@@ -1,3 +1,7 @@
+# 5.11.0
+
+- enh: DEV-148888 Drop Android 8 Support
+
 # 5.10.0
 
 - enh: DEV-154830 update gradle and kotlin
