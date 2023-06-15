@@ -4,11 +4,8 @@
 
 import 'dart:async';
 
-import 'package:alkami_core_dependencies/alkami_core_dependencies.dart' hide CreationParams;
-
-import '../platform_interface/javascript_channel_registry.dart';
-import '../platform_interface/platform_interface.dart';
-import '../types/types.dart';
+import 'package:flutter/services.dart';
+import 'package:webview_flutter_platform_interface/webview_flutter_platform_interface.dart';
 
 /// A [WebViewPlatformController] that uses a method channel to control the webview.
 class MethodChannelWebViewPlatform implements WebViewPlatformController {

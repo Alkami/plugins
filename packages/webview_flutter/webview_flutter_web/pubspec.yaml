@@ -2,7 +2,7 @@ name: webview_flutter_web
 description: A Flutter plugin that provides a WebView widget on web.
 repository: https://github.com/Alkami/plugins/tree/main/packages/webview_flutter
 publish_to: https://dart.cloudsmith.io/alkami/flutter/
-version: 5.11.0 # original version was 0.1.0+1 when this was forked
+version: 5.12.0 # original version was 0.1.0+1 when this was forked
 
 environment:
   sdk: ">=2.18.0 <3.0.0" # dart version
@@ -17,26 +17,17 @@ flutter:
         fileName: webview_flutter_web.dart
 
 dependencies:
-  alkami_core_dependencies: 
-    hosted: https://dart.cloudsmith.io/alkami/flutter/
-    version: ^3.0.0
-
   flutter:
     sdk: flutter
 
   flutter_web_plugins:
     sdk: flutter
 
-  # FOR TESTING ONLY. DO NOT MERGE.
   webview_flutter_platform_interface: 
     hosted: https://dart.cloudsmith.io/alkami/flutter/
     version: ^5.0.0
 
 dev_dependencies:
-  alkami_core_dev_dependencies: 
-    hosted: https://dart.cloudsmith.io/alkami/flutter/
-    version: ^3.0.0
-
   build_runner: ^2.1.5
 
   flutter_driver:

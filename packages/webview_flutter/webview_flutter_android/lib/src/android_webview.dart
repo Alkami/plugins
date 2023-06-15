@@ -3,10 +3,8 @@
 // found in the LICENSE file.
 
 import 'dart:typed_data';
-import 'dart:ui';
 
-import 'package:alkami_core_dependencies/alkami_core_dependencies.dart';
-import 'package:flutter/widgets.dart' show AndroidViewSurface;
+import 'package:flutter/material.dart';
 
 import 'android_webview.pigeon.dart';
 import 'android_webview_api_impls.dart';
@@ -856,6 +854,5 @@ class FlutterAssetManager {
   Future<List<String?>> list(String path) => api.list(path);
 
   /// Gets the relative file path to the Flutter asset with the given name.
-  Future<String> getAssetFilePathByName(String name) =>
-      api.getAssetFilePathByName(name);
+  Future<String> getAssetFilePathByName(String name) => api.getAssetFilePathByName(name);
 }

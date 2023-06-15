@@ -3,7 +3,8 @@
 import 'dart:async';
 import 'dart:typed_data';
 
-import 'package:alkami_core_dependencies/alkami_core_dependencies.dart';
+import 'package:flutter/material.dart';
+
 import 'package:webview_flutter_platform_interface/webview_flutter_platform_interface.dart';
 
 import 'web_view.dart';

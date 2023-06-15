@@ -5,7 +5,9 @@
 import 'dart:async';
 import 'dart:html';
 
-import 'package:alkami_core_dependencies/alkami_core_dependencies.dart' hide CreationParams;
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:webview_flutter_platform_interface/webview_flutter_platform_interface.dart';
 

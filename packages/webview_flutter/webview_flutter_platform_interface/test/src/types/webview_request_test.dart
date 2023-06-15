@@ -4,7 +4,7 @@
 
 import 'dart:typed_data';
 
-import 'package:alkami_core_dev_dependencies/alkami_core_dev_dependencies.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:webview_flutter_platform_interface/src/types/types.dart';
 
 void main() {

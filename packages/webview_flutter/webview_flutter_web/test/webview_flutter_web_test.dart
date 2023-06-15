@@ -5,8 +5,11 @@
 import 'dart:html';
 import 'dart:typed_data';
 
-import 'package:alkami_core_dependencies/alkami_core_dependencies.dart' hide CreationParams;
-import 'package:alkami_core_dev_dependencies/alkami_core_dev_dependencies.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/annotations.dart';
+import 'package:mockito/mockito.dart';
 import 'package:webview_flutter_platform_interface/webview_flutter_platform_interface.dart';
 import 'package:webview_flutter_web/webview_flutter_web.dart';
 

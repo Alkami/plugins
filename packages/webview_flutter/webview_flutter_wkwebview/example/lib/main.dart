@@ -5,7 +5,9 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:alkami_core_dependencies/alkami_core_dependencies.dart';
+import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
+
 import 'package:webview_flutter_platform_interface/webview_flutter_platform_interface.dart';
 
 import 'navigation_decision.dart';

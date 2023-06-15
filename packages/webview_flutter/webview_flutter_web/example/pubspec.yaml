@@ -7,9 +7,6 @@ environment:
   flutter: ">=3.3.0"
 
 dependencies:
-  alkami_core_dependencies: 
-    hosted: https://dart.cloudsmith.io/alkami/flutter/
-    version: ^3.0.0
   flutter:
     sdk: flutter
   flutter_web_plugins:
@@ -23,9 +20,6 @@ dependencies:
     path: ../
 
 dev_dependencies:
-  alkami_core_dev_dependencies: 
-    hosted: https://dart.cloudsmith.io/alkami/flutter/
-    version: ^3.0.0
   espresso: ^0.1.0+2
   flutter_driver:
     sdk: flutter

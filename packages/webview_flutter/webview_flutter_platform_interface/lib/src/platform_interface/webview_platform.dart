@@ -1,13 +1,7 @@
-import 'package:alkami_core_dependencies/alkami_core_dependencies.dart' hide CreationParams;
-// Copyright 2013 The Flutter Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
-
-import 'package:webview_flutter_platform_interface/src/platform_interface/javascript_channel_registry.dart';
-
-import '../types/types.dart';
-import 'webview_platform_callbacks_handler.dart';
-import 'webview_platform_controller.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
+import 'package:webview_flutter_platform_interface/webview_flutter_platform_interface.dart';
 
 /// Signature for callbacks reporting that a [WebViewPlatformController] was created.
 ///

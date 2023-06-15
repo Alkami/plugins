@@ -2,12 +2,12 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'dart:typed_data';
-
-import 'package:alkami_core_dependencies/alkami_core_dependencies.dart' hide CreationParams;
-import 'package:alkami_core_dev_dependencies/alkami_core_dev_dependencies.dart';
-import 'package:flutter/src/foundation/basic_types.dart';
-import 'package:flutter/src/gestures/recognizer.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/annotations.dart';
+import 'package:mockito/mockito.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_platform_interface/webview_flutter_platform_interface.dart';
 
