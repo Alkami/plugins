@@ -1,8 +1,8 @@
-import 'package:alkami_core_dependencies/alkami_core_dependencies.dart';
+import 'package:flutter/material.dart';
+
 // Copyright 2013 The Flutter Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
-
 
 import '../foundation/foundation.dart';
 
@@ -214,8 +214,7 @@ class WKWebViewConfiguration {
   // TODO(bparrishMines): Remove ignore once constructor is implemented.
   // ignore: avoid_unused_constructor_parameters
   WKWebViewConfiguration._fromWebView(WKWebView webView) {
-    userContentController =
-        WKUserContentController._fromWebViewConfiguretion(this);
+    userContentController = WKUserContentController._fromWebViewConfiguretion(this);
   }
 
   /// Coordinates interactions between your app’s code and the webpage’s scripts and other content.
@@ -282,8 +281,7 @@ class WKWebView {
   ///
   /// If you didn’t create your web view with a [WKWebViewConfiguration] this
   /// property contains a default configuration object.
-  late final WKWebViewConfiguration configuration =
-      WKWebViewConfiguration._fromWebView(this);
+  late final WKWebViewConfiguration configuration = WKWebViewConfiguration._fromWebView(this);
 
   /// Used to integrate custom user interface elements into web view interactions.
   set uiDelegate(WKUIDelegate delegate) {

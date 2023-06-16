@@ -4,7 +4,7 @@
 
 import 'dart:async';
 
-import 'package:alkami_core_dependencies/alkami_core_dependencies.dart' hide CreationParams;
+import 'package:flutter/material.dart';
 import 'package:webview_flutter_platform_interface/webview_flutter_platform_interface.dart';
 
 import 'web_kit/web_kit.dart';

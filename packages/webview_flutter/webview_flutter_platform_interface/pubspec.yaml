@@ -2,26 +2,19 @@ name: webview_flutter_platform_interface
 description: A common platform interface for the webview_flutter plugin.
 repository: https://github.com/Alkami/plugins/tree/main/packages/webview_flutter
 publish_to: https://dart.cloudsmith.io/alkami/flutter/
-version: 5.11.0 # original version was 1.8.1 when this was forked
+version: 5.12.0 # original version was 1.8.1 when this was forked
 
 environment:
   sdk: ">=2.18.0 <3.0.0" # dart version
   flutter: ">=3.3.0"
 
 dependencies:
-  alkami_core_dependencies: 
-    hosted: https://dart.cloudsmith.io/alkami/flutter/
-    version: ^3.0.0
-
   flutter:
     sdk: flutter
+
   plugin_platform_interface: ^2.1.0
 
 dev_dependencies:
-  alkami_core_dev_dependencies: 
-    hosted: https://dart.cloudsmith.io/alkami/flutter/
-    version: ^3.0.0
-
   flutter_test:
     sdk: flutter
 
