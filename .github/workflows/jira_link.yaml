@@ -9,5 +9,5 @@ on:
 jobs:
   build:
     name: Link PR to JIRA issue
-    uses: alkami/flutter_platform/.github/workflows/reusable_jira_link.yaml@main
+    uses: alkami/github_actions/.github/workflows/reusable_jira_link.yaml@main
     secrets: inherit
