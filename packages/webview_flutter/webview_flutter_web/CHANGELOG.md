@@ -1,3 +1,7 @@
+# 5.13.0
+
+- chore(DEV-152074) Update Android targetSDKVersion to 33
+
 # 5.12.0
 
 - enh: DEV-156308 Convert flutter_platform out of a monorepo
