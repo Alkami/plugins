@@ -1,0 +1,20 @@
+env:
+  FLUTTER_VERSION: 3.7.3
+  GITHUB_TOKEN: ${{ secrets.GH_ACTIONS_PAT }}
+  CLOUDSMITH_API_KEY: ${{ secrets.CLOUDSMITH_API_KEY }}
+
+on:
+  workflow_call:
+
+jobs:
+  build:
+    name: Validate PR is Ready for Merge - Reusable
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Setup Alkami Environment 
+        uses: alkami/github_actions/.github/composites/environment_setup@main
+
+      - name: Validate PR is ready
+        run: ./shell_scripts/alkamiValidatePRIsReadyForMerge.sh

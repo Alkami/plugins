@@ -8,8 +8,12 @@ on:
       - labeled
       - unlabeled
 
+defaults:
+  run:
+    working-directory: webview_flutter
+
 jobs:
   build:
     name: Validate PR Labels
-    uses: alkami/flutter_platform/.github/workflows/reusable_label_validation.yaml@main
+    uses: alkami/github_actions/.github/workflows/reusable_label_validation.yaml@main
     secrets: inherit

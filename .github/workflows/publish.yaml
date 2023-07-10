@@ -1,48 +1,25 @@
-name: Release Package
-
 env:
-  dart_version: 2.19.2
-  flutter_version: 3.7.3
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  FLUTTER_VERSION: 3.7.3
+  CLOUDSMITH_API_KEY: ${{ secrets.CLOUDSMITH_API_KEY }}
+  # Using the GH_ACTIONS_PAT so that it can bypass branch protection PR requirement
+  # Info of how this works: https://stackoverflow.com/questions/69263843/how-to-push-to-protected-main-branches-in-a-github-actionv
+  GITHUB_TOKEN: ${{ secrets.GH_ACTIONS_PAT }}
 
 on:
-  push:
-    branches:
-      - main
-      - hotfix/**
+  workflow_call:
 
 jobs:
-  release_package:
-    name: Release and tag package with GitHub Api
+  build:
+    # *** This if check is very important ***
+    # We use this to make sure that we do not get into an infinite loop of workflow runs triggered by a push.
+    if: github.event.pusher.name != 'alkami-svc-github-circle'
+    name: Publish Package - Reusable
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 30
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Cache Flutter dependencies
-        uses: actions/cache@v2
-        with:
-          path: /opt/hostedtoolcache/flutter
-          key: ${{ env.flutter_version }}-flutter
-
-      - name: Install Flutter
-        uses: subosito/flutter-action@v1
-        with:
-          flutter-version: ${{ env.flutter_version }}
-          channel: 'stable'
-
-      - name: Git Config Update
-        run: git config --global url."https://x-token-auth:${{ secrets.GH_ACTIONS_PAT }}@github.com".InsteadOf https://github.com
-
-      - name: Authorize Cloudsmith
-        run:  ./shell_scripts/authorize_cloudsmith.sh ${{ secrets.CLOUDSMITH_API_KEY }}
-
-      - name: Activate mplat
-        run: |
-          dart pub global activate mplat \
-            --hosted-url https://dart.cloudsmith.io/alkami/flutter/
+      - name: Setup Alkami Environment 
+        uses: alkami/github_actions/.github/composites/environment_setup@main
 
       - name: Publish
         run: ./shell_scripts/alkamiPublish.sh
